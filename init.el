@@ -15,7 +15,7 @@
     (scroll-bar-mode -1)
     (tool-bar-mode -1)))
 
-;; packages
+;; package-dependent
 (powerline-center-evil-theme)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
