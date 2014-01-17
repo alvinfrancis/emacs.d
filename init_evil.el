@@ -86,3 +86,24 @@
 ;; TODO: fix evil clipboard
 
 ;; TODO: Macro define-key multiple states
+
+(cl-flet ((evil-nav-keybindings
+           (state-map)
+           (evil-add-hjkl-bindings state-map 'emacs
+             (kbd "C-f") 'evil-scroll-page-down
+             (kbd "C-b") 'evil-scroll-page-up
+             (kbd "C-d") 'evil-scroll-page-down
+             (kbd "C-u") 'evil-scroll-page-up
+             (kbd "C-w j") 'evil-window-down
+             (kbd "C-w k") 'evil-window-up
+             (kbd "C-w h") 'evil-window-left
+             (kbd "C-w l") 'evil-window-right)))
+  (evil-nav-keybindings package-menu-mode-map)
+  (and (require 'magit)
+       (evil-nav-keybindings magit-status-mode-map))
+  (evil-nav-keybindings debugger-mode-map))
+
+(cl-flet ((evil-option-keybindings
+           (state-map)
+           (evil-define-key 'emacs state-map (kbd ";") 'evil-ex)))
+  (evil-option-keybindings package-menu-mode-map))
