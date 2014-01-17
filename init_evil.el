@@ -74,6 +74,7 @@
 
 ;; C-x evaluate lisp forms
 (define-key evil-normal-state-map (kbd ", x e") 'eval-last-sexp)
+(evil-define-key 'normal slime-mode-map (kbd ", x e") 'slime-eval-last-expression)
 (define-key evil-normal-state-map (kbd ", , x") 'eval-defun)
 
 ;; surround
