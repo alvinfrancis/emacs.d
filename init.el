@@ -10,10 +10,15 @@
 (setq-default indent-tabs-mode nil)
 (show-paren-mode t)
 (setq initial-scratch-message "")
+(setq linum-format " %d ")
+(set-face-attribute 'default nil :font "Menlo-11")
+(setq tab-width 4)
+(setq-default indent-tabs-mode nil)
 (if window-system
   (progn
     (scroll-bar-mode -1)
     (tool-bar-mode -1)))
+(menu-bar-mode -1)
 
 ;; package-dependent
 (powerline-center-evil-theme)
