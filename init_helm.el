@@ -30,8 +30,17 @@
                    helm-source-recentf
                    helm-source-buffers-list)
         :buffer "*helm-mru*"))
+(defun helm-mru ()
+  (interactive)
+  (helm :sources '(helm-source-findutils
+                   helm-source-files-in-current-dir
+                   helm-source-recentf
+                   helm-source-buffers-list)
+        :buffer "*helm-mru*"))
 
 (define-key evil-normal-state-map
-  (kbd ", C-p") 'helm-files-mru-buffers)
+  (kbd "C-p") 'helm-files-mru-buffers)
 (define-key evil-normal-state-map
-  (kbd ", , C-p") 'helm-mru)
+  (kbd ", C-p") 'helm-mru)
+(define-key evil-normal-state-map
+  (kbd ", , C-p") 'helm-buffers-list)
