@@ -24,6 +24,9 @@
 (setq alert-default-style 'notifier)
 (global-surround-mode t)
 
+(setq inferior-lisp-program "/opt/local/bin/sbcl")
+(slime-setup '(slime-fancy))
+
 ;; eval-sexp-fu requires cl and highlight to work
 ;; require is enough to turn on eval-sexp-fu
 (and 
