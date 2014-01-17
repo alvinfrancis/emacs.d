@@ -17,13 +17,6 @@
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
-(require 'auto-complete)
-(add-hook 'emacs-lisp-mode-hook 'auto-complete-mode)
-(setq ac-auto-start nil)
-(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
-(define-key ac-menu-map "\C-n" 'ac-next)
-(define-key ac-menu-map "\C-p" 'ac-previous)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

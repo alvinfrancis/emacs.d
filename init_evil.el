@@ -79,6 +79,9 @@
 ;; surround
 (global-surround-mode t)
 
+;; Completion
+(define-key evil-insert-state-map (kbd "M-TAB") 'hippie-expand)
+
 ;; TODO: fix evil clipboard
 
 ;; TODO: Macro define-key multiple states
