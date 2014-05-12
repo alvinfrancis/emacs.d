@@ -7,18 +7,25 @@
 (setq inhibit-splash-screen t)
 (setq make-backup-files nil)
 (setq scroll-margin 100)
-(setq-default indent-tabs-mode nil)
+(setq-default indent-tabs-mode t)
+(setq-default tab-width 4)
 (show-paren-mode t)
 (setq initial-scratch-message "")
 (setq linum-format " %d ")
-(set-face-attribute 'default nil :font "Menlo-11")
+(set-face-attribute 'default nil :font "Monaco-11")
 (setq tab-width 4)
 (setq-default indent-tabs-mode nil)
+(setq visible-bell t)
+(menu-bar-mode -1)
+(electric-indent-mode 1)
 (if window-system
   (progn
     (scroll-bar-mode -1)
     (tool-bar-mode -1)))
-(menu-bar-mode -1)
+
+;; mac-stuff
+(setq mac-option-modifier 'meta)
+(setq mac-command-modifier 'super)
 
 ;; package-dependent
 (powerline-center-evil-theme)
@@ -28,9 +35,9 @@
 (global-rainbow-delimiters-mode)
 (setq alert-default-style 'notifier)
 (global-surround-mode t)
+;; (global-hl-sexp-mode t)
 
 (setq inferior-lisp-program "/opt/local/bin/sbcl")
-(slime-setup '(slime-fancy))
 
 ;; eval-sexp-fu requires cl and highlight to work
 ;; require is enough to turn on eval-sexp-fu
@@ -43,3 +50,52 @@
 ;; (and
 ;;  (require 'centered-cursor-mode)
 ;;  (global-centered-cursor-mode t))
+
+;;;; Pending organization
+
+;; JS2-mode
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode)) 
+
+;; slime
+(slime-setup '(slime-fancy slime-asdf))
+(add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
+(add-hook 'clojure-mode-hook 'enable-paredit-mode)
+
+;; Trident-mode
+(add-to-list 'auto-mode-alist (cons "\\.paren\\'" 'lisp-mode))
+(add-hook 'lisp-mode-hook
+          #'(lambda ()
+              (when (and buffer-file-name
+                         (string-match-p "\\.paren\\>" buffer-file-name))
+                (unless (slime-connected-p)
+                  (save-excursion (slime)))
+                (trident-mode +1))))
+(add-hook 'trident-mode-hook (lambda () (trident-add-keys-with-prefix "C-c C-e")))
+
+;; Transparency
+(defun transparency (value)
+  "Sets the transparency of the frame window. 0=transparent/100=opaque"
+  (interactive "nTransparency Value 0 - 100 opaque:")
+  (set-frame-parameter (selected-frame) 'alpha value))
+
+;; Powerline
+(setf powerline-default-separator nil)
+
+;; Lisp indenting
+(add-hook 'lisp-mode-hook
+          (lambda ()
+            (set (make-local-variable 'lisp-indent-function)
+                 'common-lisp-indent-function)))
+
+;; git
+(when window-system
+  (require 'git-gutter-fringe+))
+
+;; Ace Mode
+(global-set-key (kbd "s-f") 'evil-ace-jump-char-mode)
+
+;; smart-tabs-mode
+(smart-tabs-add-language-support csharp csharp-mode-hook
+  ((c-indent-line . c-basic-offset)
+   (c-indent-region . c-basic-offset)))
+(smart-tabs-insinuate 'c 'c++ 'csharp 'java 'javascript 'cperl 'python 'ruby 'nxml)

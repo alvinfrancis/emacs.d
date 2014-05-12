@@ -32,8 +32,12 @@
 
 ;; Minimize chording
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+(define-key evil-normal-state-map (kbd ", ;") 'helm-M-x)
 (define-key evil-motion-state-map (kbd ";") 'evil-ex)
 (define-key evil-visual-state-map (kbd ";") 'evil-ex)
+(define-key evil-visual-state-map (kbd ", ;") 'helm-M-x)
+(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+(key-chord-define evil-replace-state-map "jj" 'evil-normal-state)
 (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
 (define-key evil-motion-state-map (kbd ":") 'evil-repeat-find-char)
 (define-key evil-visual-state-map (kbd ":") 'evil-repeat-find-char)
@@ -43,6 +47,13 @@
   (kbd "<left>") 'evil-prev-buffer)
 (define-key evil-normal-state-map
   (kbd "<right>") 'evil-next-buffer)
+
+;; Fix Y
+(defun evil-yank-to-end-of-line ()
+  "Yank to end of line."
+  (interactive)
+  (evil-yank (point) (point-at-eol)))
+(define-key evil-normal-state-map (kbd "Y") 'evil-yank-to-end-of-line)
 
 ;; Don't jump to next search
 (defun evil-search-word-forward-stay ()
@@ -73,9 +84,12 @@
 (define-key evil-normal-state-map (kbd "g c") 'evil-toggle-comment)
 
 ;; C-x evaluate lisp forms
+(define-key evil-normal-state-map (kbd ", e p") 'eval-print-last-sexp)
 (define-key evil-normal-state-map (kbd ", x e") 'eval-last-sexp)
 (evil-define-key 'normal slime-mode-map (kbd ", x e") 'slime-eval-last-expression)
 (define-key evil-normal-state-map (kbd ", , x") 'eval-defun)
+(evil-define-key 'normal slime-mode-map (kbd ", , x") 'slime-eval-defun)
+;; (slime-setup '(slime-fancy slime-asdf))
 
 ;; surround
 (global-surround-mode t)
@@ -101,8 +115,8 @@
   (evil-nav-keybindings package-menu-mode-map)
   (and (require 'magit)
        (evil-nav-keybindings magit-status-mode-map))
-  (evil-nav-keybindings debugger-mode-map))
-
+  (and (require 'debug)
+       (evil-nav-keybindings debugger-mode-map)))
 (cl-flet ((evil-option-keybindings
            (state-map)
            (evil-define-key 'emacs state-map (kbd ";") 'evil-ex)))

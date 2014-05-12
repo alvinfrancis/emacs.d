@@ -7,43 +7,45 @@
 
 (require 'cl)
 (defun bundle-install-packages (packages)
+  "Install each package in packages if not yet installed."
   (mapc '(lambda (package)
            (unless (package-installed-p package)
              (package-install package)))
         (remove-if 'package-installed-p packages)))
 
 ;; Install all of the following packages
-(bundle-install-packages (list
-                          'ace-jump-mode
-                          'alert
-                          'auto-complete
-                          'centered-cursor-mode
-                          'elscreen
-                          'eval-sexp-fu
-                          'evil
-                          'evil-indent-textobject
-                          'evil-leader
-                          'evil-matchit
-                          'evil-nerd-commenter
-                          'evil-paredit
-                          'evil-tabs
-                          'evil-visualstar
-                          'goto-chg
-                          'helm
-                          'highlight
-                          'key-chord
-                          'monokai-theme
-                          'magit
-                          'noctilux-theme
-                          'paredit
-                          'popup
-                          'powerline
-                          'rainbow-delimiters
-                          'rainbow-mode
-                          'slime
-                          'solarized-theme
-                          'surround
-                          'undo-tree
-                          'vimrc-mode
-                          'w3m
-                          'zenburn-theme))
+(bundle-install-packages '(ace-jump-mode
+                           alert
+                           auto-complete
+                           centered-cursor-mode
+                           elscreen
+                           eval-sexp-fu
+                           evil
+                           evil-indent-textobject
+                           evil-leader
+                           evil-matchit
+                           evil-nerd-commenter
+                           evil-paredit
+                           evil-tabs
+                           evil-visualstar
+                           goto-chg
+                           helm
+                           highlight
+                           hl-sexp
+                           key-chord
+                           monokai-theme
+                           magit
+                           noctilux-theme
+                           paredit
+                           popup
+                           powerline
+                           rainbow-delimiters
+                           rainbow-mode
+                           slime
+                           solarized-theme
+                           surround
+                           trident-mode
+                           undo-tree
+                           vimrc-mode
+                           w3m
+                           zenburn-theme))
