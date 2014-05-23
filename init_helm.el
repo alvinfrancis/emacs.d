@@ -1,7 +1,7 @@
 (helm-mode t)
 (require 'helm-ls-git)
 
-;; sources and keymaps
+;;;; sources and keymaps
 (defun helm-files-mru ()
   (interactive)
   (helm :sources '(helm-source-recentf
@@ -19,3 +19,5 @@
   (kbd "\\ b") 'helm-buffers-list)
 (define-key evil-normal-state-map
   (kbd "\\ l") 'helm-swoop)
+
+(setq recentf-max-saved-items 500)
