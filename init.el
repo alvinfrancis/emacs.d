@@ -99,3 +99,13 @@
   ((c-indent-line . c-basic-offset)
    (c-indent-region . c-basic-offset)))
 (smart-tabs-insinuate 'c 'c++ 'csharp 'java 'javascript 'cperl 'python 'ruby 'nxml)
+
+;; csharp-mode hook
+(add-hook 'csharp-mode-hook
+          (lambda ()
+            (electric-pair-mode)
+            (setq electric-pair-pairs '((?\" . ?\")
+                                        (?\{ . ?\})
+                                        (?\< . ?\>)))
+            ;; No easy way to disable using csharp-insert-open-brace.
+            (local-set-key (kbd "{") 'self-insert-command)))
