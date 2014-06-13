@@ -1,6 +1,7 @@
 (setq default-directory "~/")
 (global-hl-line-mode t)
 (global-nlinum-mode t)
+(global-git-gutter+-mode t)
 (recentf-mode t)
 (set-default 'truncate-lines t)
 (setq auto-save-default nil)

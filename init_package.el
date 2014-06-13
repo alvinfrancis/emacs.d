@@ -34,6 +34,7 @@
                            hl-sexp
                            key-chord
                            monokai-theme
+                           git-gutter+
                            magit
                            noctilux-theme
                            paredit
