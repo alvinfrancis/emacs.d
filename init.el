@@ -16,6 +16,7 @@
 (setq tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq visible-bell t)
+(setq fill-column 80)
 (menu-bar-mode -1)
 (electric-indent-mode 1)
 (if window-system
