@@ -111,3 +111,7 @@
                                         (?\< . ?\>)))
             ;; No easy way to disable using csharp-insert-open-brace.
             (local-set-key (kbd "{") 'self-insert-command)))
+
+;; Emacs Lisp Mode
+(define-key emacs-lisp-mode-map
+  (kbd "C-h C-f") 'find-function)
