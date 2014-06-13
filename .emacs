@@ -53,3 +53,8 @@
  '(fringe-mode nil nil (fringe))
  '(powerline-color1 "#3d3d68")
  '(powerline-color2 "#292945"))
+
+(defun timezone-fix-time-to-local (time)
+  "Convert TIME to YYYY-MM-DD-HH-MM-SS-ZONE vector."
+  (require 'timezone)
+  (timezone-fix-time time t nil))
