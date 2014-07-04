@@ -6,6 +6,7 @@
 (set-default 'truncate-lines t)
 (setq auto-save-default nil)
 (setq inhibit-splash-screen t)
+(setq create-lockfiles nil)
 (setq make-backup-files nil)
 (setq scroll-margin 100)
 (setq-default indent-tabs-mode t)
