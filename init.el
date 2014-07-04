@@ -114,5 +114,9 @@
             (local-set-key (kbd "{") 'self-insert-command)))
 
 ;; Emacs Lisp Mode
-(define-key emacs-lisp-mode-map
-  (kbd "C-h C-f") 'find-function)
+(cl-labels ((help-prefix (key command)
+                         (define-key 'help-command key command)))
+  (help-prefix (kbd "C-f") 'find-function)
+  (help-prefix (kbd "C-f") 'find-function-on-key)
+  (help-prefix (kbd "C-l") 'find-library)
+  (help-prefix (kbd "C-v") 'find-variable))
