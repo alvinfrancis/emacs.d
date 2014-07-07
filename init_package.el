@@ -15,6 +15,7 @@
 
 ;; Install all of the following packages
 (bundle-install-packages '(ace-jump-mode
+                           adaptive-wrap
                            alert
                            auto-complete
                            centered-cursor-mode

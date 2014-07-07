@@ -113,6 +113,15 @@
             ;; No easy way to disable using csharp-insert-open-brace.
             (local-set-key (kbd "{") 'self-insert-command)))
 
+;;;; Adaptive Wrap
+(setq-default adaptive-wrap-extra-indent 2)
+(when (fboundp 'adaptive-wrap-prefix-mode)
+  (defun visual-line-adaptive-wrap-prefix-mode ()
+    (adaptive-wrap-prefix-mode visual-line-mode)))
+(add-hook
+ 'visual-line-mode-hook
+ 'visual-line-adaptive-wrap-prefix-mode)
+
 ;; Emacs Lisp Mode
 (cl-labels ((help-prefix (key command)
                          (define-key 'help-command key command)))
