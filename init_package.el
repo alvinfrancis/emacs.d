@@ -49,5 +49,6 @@
                            trident-mode
                            undo-tree
                            vimrc-mode
+                           web-mode
                            w3m
                            zenburn-theme))
