@@ -129,3 +129,9 @@
   (help-prefix (kbd "C-f") 'find-function-on-key)
   (help-prefix (kbd "C-l") 'find-library)
   (help-prefix (kbd "C-v") 'find-variable))
+
+
+;;;; js2-mode
+(setq-default
+ js2-basic-offset 2
+ js2-bounce-indent-p t)
