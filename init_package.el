@@ -19,6 +19,7 @@
                            alert
                            auto-complete
                            centered-cursor-mode
+                           dtrt-indent
                            elscreen
                            eval-sexp-fu
                            evil
