@@ -21,6 +21,7 @@
                            centered-cursor-mode
                            dtrt-indent
                            elscreen
+                           ensime
                            eval-sexp-fu
                            evil
                            evil-indent-textobject
