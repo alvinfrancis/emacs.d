@@ -19,5 +19,7 @@
   (kbd "\\ b") 'helm-buffers-list)
 (define-key evil-normal-state-map
   (kbd "\\ l") 'helm-swoop)
+(define-key evil-normal-state-map
+  (kbd "\\ \\") 'helm-resume)
 
 (setq recentf-max-saved-items 500)
