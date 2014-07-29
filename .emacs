@@ -6,6 +6,7 @@
 (load "~/.emacs.d/init_helm.el")
 (load "~/.emacs.d/init_org.el")
 (load "~/.emacs.d/init_ensime.el")
+(load "~/.emacs.d/init-multiple-cursors.el")
 
 ;; vimrc major mode
 (add-to-list 'auto-mode-alist '(".vim\\(rc\\)?$" . vimrc-mode))
