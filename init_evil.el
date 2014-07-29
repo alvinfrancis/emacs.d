@@ -121,3 +121,8 @@
            (state-map)
            (evil-define-key 'emacs state-map (kbd ";") 'evil-ex)))
   (evil-option-keybindings package-menu-mode-map))
+
+
+;;;; Disable keys
+;; (define-key evil-normal-state-map (kbd "C-e") 'move-end-of-line)
+;; (define-key evil-insert-state-map (kbd "C-e") 'move-end-of-line)

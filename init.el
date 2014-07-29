@@ -82,7 +82,7 @@
   (set-frame-parameter (selected-frame) 'alpha value))
 
 ;; Powerline
-(setf powerline-default-separator nil)
+(setf powerline-default-separator 'arrow)
 
 ;; Lisp indenting
 (add-hook 'lisp-mode-hook
