@@ -6,12 +6,12 @@
 (setq evil-search-module 'evil-search)
 
 ;; copy pasted move-key (TODO: make this better)
-(defun move-key (keymap-from keymap-to key)
-  "Moves key binding from one keymap to another, deleting from the old location. "
-  (define-key keymap-to key (lookup-key keymap-from key))
-  (define-key keymap-from key nil))
-(move-key evil-motion-state-map evil-normal-state-map (kbd "RET"))
-(move-key evil-motion-state-map evil-normal-state-map " ")
+;; (defun move-key (keymap-from keymap-to key)
+;;   "Moves key binding from one keymap to another, deleting from the old location. "
+;;   (define-key keymap-to key (lookup-key keymap-from key))
+;;   (define-key keymap-from key nil))
+;; (move-key evil-motion-state-map evil-normal-state-map (kbd "RET"))
+;; (move-key evil-motion-state-map evil-normal-state-map " ")
 
 (define-key evil-motion-state-map (kbd "C-u") 'evil-scroll-up)
 (evil-define-motion evil-jump-up (count)
@@ -33,14 +33,12 @@
 ;; Minimize chording
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
 (define-key evil-normal-state-map (kbd ", ;") 'helm-M-x)
-(define-key evil-motion-state-map (kbd ";") 'evil-ex)
+;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
 (define-key evil-visual-state-map (kbd ";") 'evil-ex)
 (define-key evil-visual-state-map (kbd ", ;") 'helm-M-x)
-(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
-(key-chord-define evil-replace-state-map "jj" 'evil-normal-state)
 (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
 (define-key evil-motion-state-map (kbd ":") 'evil-repeat-find-char)
-(define-key evil-visual-state-map (kbd ":") 'evil-repeat-find-char)
+;; (define-key evil-visual-state-map (kbd ":") 'evil-repeat-find-char)
 
 ;; Buffer changing
 (define-key evil-normal-state-map
@@ -52,7 +50,7 @@
 (defun evil-yank-to-end-of-line ()
   "Yank to end of line."
   (interactive)
-  (evil-yank (point) (point-at-eol)))
+)
 (define-key evil-normal-state-map (kbd "Y") 'evil-yank-to-end-of-line)
 
 ;; Don't jump to next search
@@ -75,7 +73,6 @@
   (ace-jump-mode 5)
   (recursive-edit))
 (add-hook 'ace-jump-mode-end-hook 'exit-recursive-edit)
-(define-key evil-normal-state-map (kbd ", , f") 'evil-ace-jump-char-mode)
 
 ;; evil-nerd-commenter
 (evil-define-operator evil-toggle-comment (beg end)
@@ -91,9 +88,6 @@
 (evil-define-key 'normal slime-mode-map (kbd ", , x") 'slime-eval-defun)
 ;; (slime-setup '(slime-fancy slime-asdf))
 
-;; surround
-(global-surround-mode t)
-
 ;; Completion
 (define-key evil-insert-state-map (kbd "M-TAB") 'hippie-expand)
 
@@ -101,17 +95,16 @@
 
 ;; TODO: Macro define-key multiple states
 
-(cl-flet ((evil-nav-keybindings
-           (state-map)
-           (evil-add-hjkl-bindings state-map 'emacs
-             (kbd "C-f") 'evil-scroll-page-down
-             (kbd "C-b") 'evil-scroll-page-up
-             (kbd "C-d") 'evil-scroll-page-down
-             (kbd "C-u") 'evil-scroll-page-up
-             (kbd "C-w j") 'evil-window-down
-             (kbd "C-w k") 'evil-window-up
-             (kbd "C-w h") 'evil-window-left
-             (kbd "C-w l") 'evil-window-right)))
+(cl-flet ((evil-nav-keybindings (state-map)
+                                (evil-add-hjkl-bindings state-map 'emacs
+                                  (kbd "C-f") 'evil-scroll-page-down
+                                  (kbd "C-b") 'evil-scroll-page-up
+                                  (kbd "C-d") 'evil-scroll-page-down
+                                  (kbd "C-u") 'evil-scroll-page-up
+                                  (kbd "C-w j") 'evil-window-down
+                                  (kbd "C-w k") 'evil-window-up
+                                  (kbd "C-w h") 'evil-window-left
+                                  (kbd "C-w l") 'evil-window-right)))
   (evil-nav-keybindings package-menu-mode-map)
   (and (require 'magit)
        (evil-nav-keybindings magit-status-mode-map))

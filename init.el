@@ -3,24 +3,22 @@
 (global-linum-mode t)
 (global-git-gutter+-mode t)
 (recentf-mode t)
-(set-default 'truncate-lines t)
+(setq-default truncate-lines t)
 (setq auto-save-default nil)
 (setq inhibit-splash-screen t)
 (setq create-lockfiles nil)
 (setq make-backup-files nil)
 (setq scroll-margin 100)
-(setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
 (show-paren-mode t)
 (setq initial-scratch-message "")
 (setq linum-format " %d ")
-(set-face-attribute 'default nil :font "Monaco-11")
-(setq tab-width 4)
+(set-face-attribute 'default nil :font "Monaco-13")
 (setq-default indent-tabs-mode nil)
 (setq visible-bell t)
 (setq fill-column 80)
 (menu-bar-mode -1)
-(electric-indent-mode 1)
+(electric-indent-mode 1)   ;;;;;;;;;;;;;;;;;;
 (if window-system
   (progn
     (scroll-bar-mode -1)
@@ -57,7 +55,7 @@
 ;;;; Pending organization
 
 ;; JS2-mode
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode)) 
+;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode)) 
 
 ;; slime
 (slime-setup '(slime-fancy slime-asdf))
@@ -67,12 +65,12 @@
 ;; Trident-mode
 (add-to-list 'auto-mode-alist (cons "\\.paren\\'" 'lisp-mode))
 (add-hook 'lisp-mode-hook
-          #'(lambda ()
-              (when (and buffer-file-name
-                         (string-match-p "\\.paren\\>" buffer-file-name))
-                (unless (slime-connected-p)
-                  (save-excursion (slime)))
-                (trident-mode +1))))
+          (lambda ()
+            (when (and buffer-file-name
+                       (string-match-p "\\.paren\\>" buffer-file-name))
+              (unless (slime-connected-p)
+                (save-excursion (slime)))
+              (trident-mode +1))))
 (add-hook 'trident-mode-hook (lambda () (trident-add-keys-with-prefix "C-c C-e")))
 
 ;; Transparency
@@ -85,7 +83,7 @@
 (setf powerline-default-separator 'arrow)
 
 ;; Lisp indenting
-(add-hook 'lisp-mode-hook
+(add-hook 'lisp-mode-hook  ; TODO: keep this?
           (lambda ()
             (set (make-local-variable 'lisp-indent-function)
                  'common-lisp-indent-function)))
@@ -131,7 +129,8 @@
   (help-prefix (kbd "C-v") 'find-variable))
 
 
-;;;; js2-mode
+;;;; js2-mode and js-mode
+(setq-default js-indent-level 2)
 (setq-default
  js2-basic-offset 2
  js2-bounce-indent-p t)
