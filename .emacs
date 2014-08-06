@@ -363,6 +363,13 @@
                (c-indent-region . c-basic-offset)))
             (smart-tabs-insinuate 'c 'c++ 'csharp 'java 'javascript 'cperl 'python 'ruby 'nxml)))
 
+(req-package highlight
+  :require evil
+  :config (bind-keys
+           :map evil-normal-state-map
+           (", h h" . hlt-highlight-symbol)
+           (", h x" . hlt-unhighlight-symbol)))
+
 ;;;; Elisp Libraries
 (req-package alert
   :init (setq alert-default-style 'notifier))
