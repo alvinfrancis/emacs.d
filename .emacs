@@ -2,8 +2,7 @@
 (require 'package)
 
 (setq
- package-user-dir (concat (file-name-as-directory user-emacs-directory)
-                          (file-name-as-directory "elpa"))
+ package-user-dir (expand-file-name (file-name-as-directory "elpa") user-emacs-directory)
  package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                     ("marmalade" . "http://marmalade-repo.org/packages/")
                     ("melpa" . "http://melpa.milkbox.net/packages/")))
@@ -12,7 +11,7 @@
 ;; req-package should ideally be loaded by something other than package
 (require 'req-package)
 
-(setq custom-file (concat (file-name-as-directory user-emacs-directory) "custom.el"))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 ;;;; Basic
 ;; clean UI
