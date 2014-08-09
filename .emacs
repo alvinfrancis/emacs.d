@@ -75,7 +75,7 @@
   (set-face-attribute 'vertical-border nil :foreground
                       (face-attribute 'default :background)))
 
-(load-theme 'fogus t)
+(load-theme 'bubbleberry t)
 
 
 (req-package linum
@@ -159,6 +159,7 @@
             (add-hook 'ensime-connected-hook 'setup-ensime)))
 
 (req-package trident-mode
+  :require (slime skewer)
   :init (add-to-list 'auto-mode-alist (cons "\\.paren\\'" 'lisp-mode))
   :config (progn
             (add-hook 'lisp-mode-hook
@@ -199,6 +200,12 @@
   (help-prefix (kbd "C-k") 'find-function-on-key)
   (help-prefix (kbd "C-l") 'find-library)
   (help-prefix (kbd "C-v") 'find-variable))
+
+;; HTML
+(add-hook 'html-mode-hook
+          (lambda ()
+            (progn
+              (setq-local tab-width 2))))
 
 (req-package eldoc
   :config (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
@@ -363,6 +370,9 @@
               ((c-indent-line . c-basic-offset)
                (c-indent-region . c-basic-offset)))
             (smart-tabs-insinuate 'c 'c++ 'csharp 'java 'javascript 'cperl 'python 'ruby 'nxml)))
+
+(req-package linum-relative
+  :init (setq linum-relative-format " %3s "))
 
 (req-package highlight
   :require evil
