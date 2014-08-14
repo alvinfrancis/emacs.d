@@ -186,6 +186,11 @@
 (req-package vimrc-mode
   :config (add-to-list 'auto-mode-alist '(".vim\\(rc\\)?$" . vimrc-mode)))
 
+;; SQL
+(add-hook 'sql-interactive-mode-hook
+          (lambda ()
+            (unbind-key ";" sql-interactive-mode-map)))
+
 ;; Lisp
 (add-hook 'lisp-mode-hook
           (lambda ()
