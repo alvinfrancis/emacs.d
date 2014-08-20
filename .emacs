@@ -383,13 +383,6 @@
             (global-set-key (kbd "s-<down>") 'mc/mark-next-like-this))
 )
 
-(req-package smart-tabs-mode
-  :config (progn
-            (smart-tabs-add-language-support csharp csharp-mode-hook
-              ((c-indent-line . c-basic-offset)
-               (c-indent-region . c-basic-offset)))
-            (smart-tabs-insinuate 'c 'c++ 'csharp 'java 'javascript 'cperl 'python 'ruby 'nxml)))
-
 (req-package linum-relative
   :init (setq linum-relative-format " %3s "))
 
