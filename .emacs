@@ -352,6 +352,9 @@
             (helm-mode t)))
 
 (req-package eval-sexp-fu)
+(req-package helm-descbinds
+  :require helm)
+
 
 (req-package multiple-cursors
   :init (progn
