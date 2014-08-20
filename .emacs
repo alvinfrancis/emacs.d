@@ -98,6 +98,7 @@
   :config (global-rainbow-delimiters-mode))
 
 (req-package powerline
+  :require evil
   :init (setf powerline-default-separator 'arrow)
   :config (progn
             (defadvice load-theme (after reset-powerline activate)
@@ -276,6 +277,19 @@
   :config (progn
             (add-hook 'ace-jump-mode-end-hook 'exit-recursive-edit)
             (evil-mode t)))
+
+(req-package evil-visualstar
+  ;; Problems with using n and N to continue the search
+  :require evil)
+
+(req-package evil-paredit
+  :require evil)
+
+(req-package evil-leader
+  :require evil)
+
+(req-package evil-indent-textobject
+  :require evil)
 
 ;;;; Utilities
 (req-package hippie-exp
