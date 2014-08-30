@@ -387,12 +387,13 @@
          (evil-normal-state)
          (bind-keys
           :map evil-normal-state-local-map
-          ("\\ \\ i" . package-menu-mark-install)
-          ("\\ \\ d" . package-menu-mark-delete)
-          ("\\ \\ U" . package-menu-mark-upgrades)
-          ("\\ \\ u" . package-menu-mark-unmark)
-          ("\\ q" . quit-window)
-          ("\\ \\ x" . package-menu-execute)))))
+          ("i" . package-menu-mark-install)
+          ("d" . package-menu-mark-delete)
+          ("U" . package-menu-mark-upgrades)
+          ("u" . package-menu-mark-unmark)
+          ("RET" . package-menu-describe-package)
+          ("q" . quit-window)
+          ("x" . package-menu-execute)))))
   (add-hook 'package-menu-mode-hook #'package-menu-evil))
 
 
