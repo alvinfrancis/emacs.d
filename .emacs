@@ -192,9 +192,23 @@
 (req-package web-mode)
 
 ;; SQL
-(add-hook 'sql-interactive-mode-hook
+(req-package sql
+  :init (add-hook 'sql-interactive-mode-hook
           (lambda ()
             (unbind-key ";" sql-interactive-mode-map)))
+  :config (defun sql-send-paragraph ()
+            "Send the current paragraph to the SQL process."
+            (interactive)
+            (let ((start (save-excursion
+                           (backward-paragraph)
+                           (point)))
+                  (end (save-excursion
+                         (forward-paragraph)
+                         (point))))
+              (sql-send-string
+               (mapconcat #'identity
+                          (split-string (buffer-substring start end) "\n")
+                          " ")))))
 
 ;; Lisp
 (add-hook 'lisp-mode-hook
