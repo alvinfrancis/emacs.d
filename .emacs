@@ -37,6 +37,15 @@
  mac-command-modifier 'super            ; command for Super
  )
 
+(defun fullscreen-toggle ()
+  (interactive)
+  (let ((frame (window-frame (posn-window (event-start nil)))))
+    (if (not (eq (frame-parameter frame 'fullscreen) 'fullboth))
+        (set-frame-parameter frame 'fullscreen 'fullboth)
+      (set-frame-parameter frame 'fullscreen nil))))
+
+(bind-key "<f9>" 'fullscreen-toggle)
+
 ;; others
 (setq
  auto-save-default nil
