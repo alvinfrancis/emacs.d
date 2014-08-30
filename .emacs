@@ -122,7 +122,9 @@
   :config (progn
             (cl-labels ((enable-paredit (hook) (add-hook hook #'enable-paredit-mode)))
               (mapc #'enable-paredit '(emacs-lisp-mode-hook                  
+                                       cider-repl-mode-hook
                                        eval-expression-minibuffer-setup-hook 
+                                       clojure-mode-hook
                                        ielm-mode-hook                        
                                        lisp-mode-hook                        
                                        lisp-interaction-mode-hook            
@@ -202,6 +204,15 @@
 (req-package js2-mode)
 
 (req-package web-mode)
+
+(req-package cider
+  :require evil
+  :init (evil-define-key 'normal cider-clojure-interaction-mode-map
+          (kbd ", x p") 'cider-eval-print-last-sexp
+          (kbd ", x e") 'cider-eval-last-sexp
+          (kbd ", x r") 'cider-eval-region
+          (kbd ", x x") 'cider-eval-defun-at-point)
+  :config (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
 
 ;; SQL
 (req-package sql
