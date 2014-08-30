@@ -9,6 +9,9 @@
 (package-initialize)
 
 ;; req-package should ideally be loaded by something other than package
+(unless (package-installed-p 'req-package)
+  (package-install 'req-package))
+
 (require 'req-package)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
