@@ -149,7 +149,10 @@
 
 ;;;; Languages
 (req-package ensime
-  :commands (ensime)
+  :require evil
+  :commands ensime
+  :init (evil-define-key 'normal ensime-mode-map
+          (kbd "C-]") 'ensime-edit-definition)
   :config (progn
             (defun setup-ensime ()
               (defvar ensime-slick-prefix "^scala\\.slick\\.")
