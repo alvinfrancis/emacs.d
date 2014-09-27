@@ -317,7 +317,7 @@
            (", x p" . eval-print-last-sexp)
            (", x e" . eval-last-sexp)
            (", x x" . eval-defun)
-           )
+           (", x r" . eval-region))
           (bind-keys
            :map evil-visual-state-map
            (";" . evil-ex))
