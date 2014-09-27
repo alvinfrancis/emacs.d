@@ -217,6 +217,18 @@
           (kbd ", x x") 'cider-eval-defun-at-point)
   :config (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
 
+(req-package clojure-mode
+  :config (progn
+            (define-clojure-indent
+              (defroutes 'defun)
+              (GET 2)
+              (POST 2)
+              (PUT 2)
+              (DELETE 2)
+              (HEAD 2)
+              (ANY 2)
+              (context 2))))
+
 ;; SQL
 (req-package sql
   :init (add-hook 'sql-interactive-mode-hook
