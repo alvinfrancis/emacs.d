@@ -338,9 +338,6 @@
   ;; Problems with using n and N to continue the search
   :require evil)
 
-(req-package evil-paredit
-  :require evil)
-
 (req-package evil-leader
   :require evil)
 
