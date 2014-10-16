@@ -411,12 +411,13 @@
             (bind-key ", ;" 'helm-M-x evil-visual-state-map)
             (helm-mode t)))
 
-(req-package eval-sexp-fu)
 (req-package helm-descbinds
   :require helm)
 
 (req-package auto-complete
   :require popup)
+
+(req-package eval-sexp-fu)
 
 (cl-labels
     ((package-menu-evil ()
