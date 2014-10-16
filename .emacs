@@ -81,7 +81,9 @@
   (interactive "nTransparency Value 0 - 100 opaque:")
   (set-frame-parameter (selected-frame) 'alpha value))
 
-(req-package sublime-themes)
+;; (req-package sublime-themes)
+;; (req-package monokai-theme)
+;; (req-package bubbleberry-theme)
 
 (defadvice load-theme (before theme-dont-propagate activate)
   (mapc #'disable-theme custom-enabled-themes))
@@ -89,9 +91,6 @@
 (defadvice load-theme (after hide-vertical-border activate)
   (set-face-attribute 'vertical-border nil :foreground
                       (face-attribute 'default :background)))
-
-(load-theme 'bubbleberry t)
-
 
 (req-package linum
   :init (setq linum-format " %d ")
@@ -477,3 +476,4 @@
 
 (req-package-finish)
 (load custom-file)
+(load-theme 'bubbleberry t)
