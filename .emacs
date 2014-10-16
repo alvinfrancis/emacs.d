@@ -433,6 +433,12 @@
           ("x" . package-menu-execute)))))
   (add-hook 'package-menu-mode-hook #'package-menu-evil))
 
+(defun beautify-json ()
+  (interactive)
+  (let ((b (if mark-active (min (point) (mark)) (point-min)))
+        (e (if mark-active (max (point) (mark)) (point-max))))
+    (shell-command-on-region b e
+     "python -mjson.tool" (current-buffer) t)))
 
 (req-package multiple-cursors
   :init (progn
