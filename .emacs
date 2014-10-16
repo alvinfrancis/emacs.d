@@ -70,11 +70,14 @@
 
 ;;;; Org-mode
 (req-package org
-  :require org-journal
   :init (setq org-fontify-quote-and-verse-blocks t
-              org-src-fontify-natively t
-              org-journal-file-format "%Y-%m-%d.org")
-  :config (add-hook 'org-journal-mode-hook 'auto-fill-mode))
+              org-src-fontify-natively t))
+
+(req-package org-journal
+  :require org
+  :init (progn
+          (setq org-journal-file-format "%Y-%m-%d.org")
+          (add-hook 'org-journal-mode-hook 'auto-fill-mode)))
 
 (defun transparency (value)
   "Sets the transparency of the frame window. 0=transparent/100=opaque"
