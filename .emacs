@@ -351,6 +351,10 @@
   :require evil)
 
 ;;;; Utilities
+(req-package magit
+  :require evil
+  :config (bind-key "<f10>" 'magit-status evil-normal-state-map))
+
 (req-package hippie-exp
   :require evil
   :config (bind-key "M-TAB" 'hippie-expand evil-insert-state-map))
