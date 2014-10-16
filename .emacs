@@ -113,7 +113,7 @@
   :config (global-surround-mode t))
 
 (req-package rainbow-delimiters
-  :config (global-rainbow-delimiters-mode))
+  :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 (req-package powerline
   :require evil
