@@ -9,8 +9,11 @@
 (package-initialize)
 
 ;; req-package should ideally be loaded by something other than package
-(unless (package-installed-p 'req-package)
-  (package-install 'req-package))
+;; (package-refresh-contents)
+(mapc (lambda (p)
+        (unless (package-installed-p p)
+          (package-install p)))
+      '(use-package req-package))
 
 (require 'req-package)
 
@@ -104,6 +107,7 @@
   :config (global-git-gutter+-mode t))
 
 (req-package surround
+  :require evil
   :config (global-surround-mode t))
 
 (req-package rainbow-delimiters
@@ -403,6 +407,9 @@
 (req-package eval-sexp-fu)
 (req-package helm-descbinds
   :require helm)
+
+(req-package auto-complete
+  :require popup)
 
 (cl-labels
     ((package-menu-evil ()
