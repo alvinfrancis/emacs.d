@@ -440,6 +440,17 @@
     (shell-command-on-region b e
      "python -mjson.tool" (current-buffer) t)))
 
+(req-package which-func
+  :init (progn
+          (defun clone-buffer-and-narrow-to-function ()
+            (interactive)
+            (clone-indirect-buffer-other-window (which-function) 'pop-to-buffer)
+            (mark-defun) ; works not only in emacs-lisp, but C++, Python, ...
+            (narrow-to-region (mark) (point))
+            (pop-mark)
+            (other-window 1))
+          (define-key global-map (kbd "C-x 4 n") 'clone-buffer-and-narrow-to-function))) ; or whatever key you prefer
+
 (req-package multiple-cursors
   :init (progn
           (lexical-let ((my-mc-evil-previous-state))
