@@ -371,9 +371,10 @@
             (when (fboundp 'adaptive-wrap-prefix-mode)
               (defun visual-line-adaptive-wrap-prefix-mode ()
                 (adaptive-wrap-prefix-mode visual-line-mode)))
-            (add-hook
-             'visual-line-mode-hook
-             'visual-line-adaptive-wrap-prefix-mode)))
+            ;; (add-hook
+            ;;  'visual-line-mode-hook
+            ;; 'visual-line-adaptive-wrap-prefix-mode)
+ ))
 
 (req-package helm
   :require (evil helm-ls-git)
