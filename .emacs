@@ -405,11 +405,14 @@
              ("C-p" . helm-files-mru)
              ("\\ f" . helm-browse-project)
              ("\\ b" . helm-buffers-list)
-             ("\\ l" . helm-swoop)
              ("\\ y" . helm-show-kill-ring)
              ("\\ \\" . helm-resume))
             (bind-key ", ;" 'helm-M-x evil-visual-state-map)
             (helm-mode t)))
+
+(req-package helm-swoop
+  :require (evil helm)
+  :config (bind-key "\\ l" 'helm-swoop evil-normal-state-map))
 
 (req-package helm-descbinds
   :require helm)
