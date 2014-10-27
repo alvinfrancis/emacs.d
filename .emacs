@@ -5,7 +5,7 @@
  package-user-dir (expand-file-name (file-name-as-directory "elpa") user-emacs-directory)
  package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                     ("marmalade" . "http://marmalade-repo.org/packages/")
-                    ("melpa" . "http://melpa.milkbox.net/packages/")))
+                    ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
 ;; req-package should ideally be loaded by something other than package
