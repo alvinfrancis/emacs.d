@@ -38,6 +38,8 @@
 (setq
  mac-option-modifier 'meta              ; prefer to use option as Meta
  mac-command-modifier 'super            ; command for Super
+ delete-by-moving-to-trash t
+ trash-directory "~/.Trash"             ; play well with Trash
  )
 
 (defun fullscreen-toggle ()
