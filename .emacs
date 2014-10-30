@@ -501,6 +501,9 @@
            (", h h" . hlt-highlight-symbol)
            (", h x" . hlt-unhighlight-symbol)))
 
+(req-package exec-path-from-shell
+  :config (exec-path-from-shell-initialize))
+
 ;;;; Elisp Libraries
 (req-package alert
   :init (setq alert-default-style 'notifier))
