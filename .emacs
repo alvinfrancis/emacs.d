@@ -119,6 +119,23 @@
               "S" 'evil-surround-region)
             (global-evil-surround-mode)))
 
+(req-package elscreen
+  :require evil
+  :init (progn
+          (setq elscreen-tab-display-control nil
+                elscreen-display-screen-number nil
+                elscreen-tab-display-kill-screen nil)
+          (bind-keys
+           :map evil-normal-state-map
+           (", n n" . elscreen-create)
+           (", t c" . elscreen-kill)
+           (", t T" . elscreen-toggle-display-tab)
+           ("H" . elscreen-previous)
+           ("L" . elscreen-next)))
+  :config (progn
+            (elscreen-toggle-display-screen-number)
+            (elscreen-start)))
+
 (req-package rainbow-delimiters
   :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
