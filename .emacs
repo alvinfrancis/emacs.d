@@ -111,9 +111,13 @@
 (req-package git-gutter+
   :config (global-git-gutter+-mode t))
 
-(req-package surround
+(req-package evil-surround
   :require evil
-  :config (global-surround-mode t))
+  :config (progn
+            (evil-define-key 'visual evil-surround-mode-map
+              "s" nil
+              "S" 'evil-surround-region)
+            (global-evil-surround-mode)))
 
 (req-package rainbow-delimiters
   :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
