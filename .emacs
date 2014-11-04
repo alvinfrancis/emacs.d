@@ -125,6 +125,16 @@
           (setq elscreen-tab-display-control nil
                 elscreen-display-screen-number nil
                 elscreen-tab-display-kill-screen nil)
+
+          (defun evil-elscreen-quit ()
+            (interactive)
+            (if (and (not (elscreen-one-screen-p))
+                     (one-window-p))
+                (elscreen-kill)
+              (evil-quit)))
+
+          (evil-ex-define-cmd "quit" #'evil-elscreen-quit)
+
           (bind-keys
            :map evil-normal-state-map
            (", n n" . elscreen-create)
