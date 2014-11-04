@@ -377,6 +377,9 @@
 ;;;; Utilities
 (req-package magit
   :require evil
+  :init (progn
+          (evil-ex-define-cmd "Gstatus" #'magit-status)
+          (evil-ex-define-cmd "Gs" "Gstatus"))
   :config (bind-key "<f10>" 'magit-status evil-normal-state-map))
 
 (req-package hippie-exp
