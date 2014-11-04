@@ -336,7 +336,7 @@
           (evil-define-operator evil-toggle-comment (beg end)
             "Comment operator that can work with evil-motions."
             (comment-or-uncomment-region beg end))
-
+          
           (bind-keys
            :map evil-normal-state-map
            (";" . evil-ex)
