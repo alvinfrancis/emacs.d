@@ -250,11 +250,16 @@
 
 (req-package cider
   :require evil
-  :init (evil-define-key 'normal cider-clojure-interaction-mode-map
-          (kbd ", x p") 'cider-eval-print-last-sexp
-          (kbd ", x e") 'cider-eval-last-sexp
-          (kbd ", x r") 'cider-eval-region
-          (kbd ", x x") 'cider-eval-defun-at-point)
+  :init (progn
+          (evil-define-key 'normal cider-mode-map
+            (kbd ", x p") 'cider-eval-print-last-sexp
+            (kbd ", x e") 'cider-eval-last-sexp
+            (kbd ", x r") 'cider-eval-region
+            (kbd ", x x") 'cider-eval-defun-at-point)
+          (evil-define-key 'normal cider-stacktrace-mode-map
+            "q" 'cider-popup-buffer-quit-function)
+          (evil-define-key 'normal cider-docview-mode-map
+            "q" 'cider-popup-buffer-quit-function))
   :config (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
 
 (req-package clojure-mode
