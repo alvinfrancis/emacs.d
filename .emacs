@@ -352,6 +352,7 @@
             "Comment operator that can work with evil-motions."
             (comment-or-uncomment-region beg end))
           
+          (unbind-key (kbd "K") evil-motion-state-map)
           (bind-keys
            :map evil-normal-state-map
            (";" . evil-ex)
