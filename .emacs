@@ -481,6 +481,8 @@
 
 (req-package eval-sexp-fu)
 
+(req-package restclient)
+
 (cl-labels
     ((package-menu-evil ()
        (progn
