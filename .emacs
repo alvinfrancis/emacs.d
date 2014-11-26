@@ -292,9 +292,12 @@
 
 ;; SQL
 (req-package sql
-  :init (add-hook 'sql-interactive-mode-hook
-          (lambda ()
-            (unbind-key ";" sql-interactive-mode-map)))
+  :init (progn
+          (setq sql-product 'postgres
+                sql-server "localhost")
+          (add-hook 'sql-interactive-mode-hook
+                    (lambda ()
+                      (unbind-key ";" sql-interactive-mode-map))))
   :config (defun sql-send-paragraph ()
             "Send the current paragraph to the SQL process."
             (interactive)
