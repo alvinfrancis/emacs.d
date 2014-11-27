@@ -73,8 +73,12 @@
 
 ;;;; Org-mode
 (req-package org
-  :init (setq org-fontify-quote-and-verse-blocks t
-              org-src-fontify-natively t))
+  :init (progn
+          (require 'org-crypt)
+          (setq org-fontify-quote-and-verse-blocks t
+                org-src-fontify-natively t
+                org-tags-exclude-from-inheritance (quote ("crypt"))))
+  :config (org-crypt-use-before-save-magic))
 
 (req-package org-journal
   :require org
