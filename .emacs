@@ -479,6 +479,7 @@
              ("\\ f" . helm-browse-project)
              ("\\ b" . helm-buffers-list)
              ("\\ y" . helm-show-kill-ring)
+             ("\\ m" . helm-imenu)
              ("\\ \\" . helm-resume))
             (bind-key ", ;" 'helm-M-x evil-visual-state-map)
             (helm-mode t)))
