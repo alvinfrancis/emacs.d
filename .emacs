@@ -381,6 +381,8 @@
             (comment-or-uncomment-region beg end))
           
           (unbind-key (kbd "K") evil-motion-state-map)
+          (unbind-key (kbd "C-n") evil-insert-state-map)
+          (unbind-key (kbd "C-p") evil-insert-state-map)
           (bind-keys
            :map evil-normal-state-map
            (";" . evil-ex)
