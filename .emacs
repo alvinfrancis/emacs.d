@@ -266,7 +266,12 @@
 
 (req-package js2-mode)
 
-(req-package web-mode)
+(req-package web-mode
+  :require evil
+  :init (progn
+          (setq web-mode-code-indent-offset 2)
+          (evil-define-key 'operator web-mode-map
+            (kbd "g c") 'web-mode-comment-or-uncomment)))
 
 (req-package cider
   :require evil
