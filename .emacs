@@ -454,6 +454,8 @@
   :init (push '("^\*helm.+\*$" :regexp t :height 20) popwin:special-display-config)
   :config (popwin-mode 1))
 
+(req-package projectile)
+
 (req-package helm
   :require (evil helm-ls-git)
   :config (progn
@@ -498,6 +500,15 @@
 
 (req-package auto-complete
   :require popup)
+(req-package helm-ag)
+
+(req-package helm-projectile
+  :require (evil helm projectile helm-ag)
+  :config (bind-keys
+           :map evil-normal-state-map
+           ("C-p" . helm-projectile)
+           ("\\ p p" . helm-projectile)
+           ("\\ p a" . helm-projectile-ag)))
 
 (req-package eval-sexp-fu)
 
