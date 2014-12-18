@@ -165,13 +165,13 @@
   :require cl
   :config (progn
             (cl-labels ((enable-paredit (hook) (add-hook hook #'enable-paredit-mode)))
-              (mapc #'enable-paredit '(emacs-lisp-mode-hook                  
+              (mapc #'enable-paredit '(emacs-lisp-mode-hook
                                        cider-repl-mode-hook
-                                       eval-expression-minibuffer-setup-hook 
+                                       eval-expression-minibuffer-setup-hook
                                        clojure-mode-hook
-                                       ielm-mode-hook                        
-                                       lisp-mode-hook                        
-                                       lisp-interaction-mode-hook            
+                                       ielm-mode-hook
+                                       lisp-mode-hook
+                                       lisp-interaction-mode-hook
                                        scheme-mode-hook)))))
 
 (req-package slime
@@ -379,7 +379,7 @@
           (evil-define-operator evil-toggle-comment (beg end)
             "Comment operator that can work with evil-motions."
             (comment-or-uncomment-region beg end))
-          
+
           (unbind-key (kbd "K") evil-motion-state-map)
           (unbind-key (kbd "C-n") evil-insert-state-map)
           (unbind-key (kbd "C-p") evil-insert-state-map)
@@ -462,10 +462,10 @@
                                 :foreground "#B0E6FF"
                                 )
             (set-face-attribute 'helm-source-header nil
-                                :background "#3E6B6B" 
-                                :foreground "#7FFFFD" 
-                                :underline nil 
-                                :weight 'normal 
+                                :background "#3E6B6B"
+                                :foreground "#7FFFFD"
+                                :underline nil
+                                :weight 'normal
                                 :height 1
                                 )
             (defun helm-files-mru ()
