@@ -287,6 +287,9 @@
             "q" 'cider-popup-buffer-quit-function))
   :config (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
 
+(req-package ac-cider
+  :require cider)
+
 (req-package clojure-mode
   :config (progn
             (define-clojure-indent
