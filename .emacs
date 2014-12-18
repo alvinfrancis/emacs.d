@@ -594,6 +594,7 @@
 (req-package exec-path-from-shell
   :config (exec-path-from-shell-initialize))
 
+(req-package iedit)
 ;;;; Elisp Libraries
 (req-package alert
   :init (setq alert-default-style 'notifier))
