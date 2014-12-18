@@ -237,7 +237,7 @@
                               )))))
 
 (req-package trident-mode
-  :require (slime skewer)
+  :require (slime skewer-mode)
   :init (add-to-list 'auto-mode-alist (cons "\\.paren\\'" 'lisp-mode))
   :config (progn
             (add-hook 'lisp-mode-hook
