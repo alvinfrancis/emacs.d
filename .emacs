@@ -420,6 +420,10 @@
 (req-package evil-indent-textobject
   :require evil)
 
+(req-package evil-easymotion
+  :require evil
+  :config (evilem-default-keybindings "M-SPC"))
+
 ;;;; Utilities
 (req-package magit
   :require evil
