@@ -595,6 +595,9 @@
   :config (exec-path-from-shell-initialize))
 
 (req-package iedit)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;;;; Elisp Libraries
 (req-package alert
   :init (setq alert-default-style 'notifier))
