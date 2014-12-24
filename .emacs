@@ -513,7 +513,6 @@
   :require (evil helm projectile helm-ag)
   :config (bind-keys
            :map evil-normal-state-map
-           ("C-p" . helm-projectile)
            ("\\ p p" . helm-projectile)
            ("\\ p a" . helm-projectile-ag)))
 
