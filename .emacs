@@ -506,7 +506,11 @@
   :require helm)
 
 (req-package auto-complete
-  :require popup)
+  :require evil
+  :config (bind-keys :map ac-complete-mode-map
+                     ("C-n" . ac-next)
+                     ("C-p" . ac-previous)))
+
 (req-package helm-ag)
 
 (req-package helm-projectile
