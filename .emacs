@@ -77,8 +77,16 @@
           (require 'org-crypt)
           (setq org-fontify-quote-and-verse-blocks t
                 org-src-fontify-natively t
-                org-tags-exclude-from-inheritance (quote ("crypt"))))
-  :config (org-crypt-use-before-save-magic))
+                org-tags-exclude-from-inheritance (quote ("crypt"))
+                org-crypt-key "alvin.francis.dumalus@gmail.com")
+          (set-face-attribute 'org-block-background nil
+                              :background "#070707")
+          (set-face-attribute 'org-block-begin-line nil
+                              :background "#002D43")
+          (set-face-attribute 'org-block-end-line nil
+                              :background "#002D43"))
+  :config (progn
+            (org-crypt-use-before-save-magic)))
 
 (req-package org-journal
   :require org
