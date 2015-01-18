@@ -410,6 +410,7 @@
            (";" . evil-ex))
           (bind-keys
            :map evil-motion-state-map
+           ("s-f" . evil-ace-jump-char-mode)
            ("C-u" . evil-scroll-up)
            ("-" . evil-jump-up)
            ("SPC" . evil-jump-down)
