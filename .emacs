@@ -440,11 +440,15 @@
 
 ;;;; Utilities
 (req-package magit
-  :require evil
+  :require (evil hl-line)
   :init (progn
           (evil-ex-define-cmd "Gstatus" #'magit-status)
           (evil-ex-define-cmd "Gs" "Gstatus"))
-  :config (bind-key "<f10>" 'magit-status evil-normal-state-map))
+  :config (progn
+            (add-hook 'magit-mode-hook
+                      (lambda ()
+                        (hl-line-mode)))
+            (bind-key "<f10>" 'magit-status evil-normal-state-map)))
 
 (req-package hippie-exp
   :require evil
