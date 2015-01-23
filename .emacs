@@ -626,4 +626,4 @@
 
 (req-package-finish)
 (load custom-file)
-(load-theme 'bubbleberry t)
+(load-theme 'fogus t)
