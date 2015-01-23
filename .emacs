@@ -119,9 +119,6 @@
 (req-package paren
   :config (show-paren-mode t))
 
-(req-package hl-line
-  :config (global-hl-line-mode t))
-
 (req-package git-gutter+
   :config (global-git-gutter+-mode t))
 
