@@ -88,6 +88,10 @@
           (set-face-attribute 'org-block-end-line nil
                               :background "#002D43"))
   :config (progn
+            (org-babel-do-load-languages
+             'org-babel-load-languages
+             '((emacs-lisp . t)
+               (sql . t)))
             (org-crypt-use-before-save-magic)))
 
 (req-package org-journal
