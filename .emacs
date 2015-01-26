@@ -86,7 +86,12 @@
           (set-face-attribute 'org-block-begin-line nil
                               :background "#002D43")
           (set-face-attribute 'org-block-end-line nil
-                              :background "#002D43"))
+                              :background "#002D43")
+          (evil-define-key 'normal org-mode-map
+            (kbd "> >") 'org-indent-item
+            (kbd "> t") 'org-indent-item-tree
+            (kbd "< <") 'org-outdent-item
+            (kbd "< t") 'org-outdent-item-tree))
   :config (progn
             (org-babel-do-load-languages
              'org-babel-load-languages
