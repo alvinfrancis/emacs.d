@@ -361,6 +361,9 @@
             (progn
               (setq-local tab-width 2))))
 
+;; YAML
+(req-package yaml-mode)
+
 (req-package eldoc
   :config (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
 
