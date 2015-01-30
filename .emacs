@@ -73,7 +73,7 @@
 
 ;;;; Org-mode
 (req-package org
-  :require htmlize
+  :require (htmlize evil)
   :init (progn
           (require 'org-crypt)
           (setq org-fontify-quote-and-verse-blocks t
