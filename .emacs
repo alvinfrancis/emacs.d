@@ -318,6 +318,8 @@
               (ANY 2)
               (context 2))))
 
+(req-package clojure-cheatsheet)
+
 ;; SQL
 (req-package sql
   :init (progn
