@@ -178,7 +178,14 @@
             (powerline-center-evil-theme)))
 
 (req-package paredit
-  :require cl
+  :require (cl evil)
+  :init (evil-define-key 'normal paredit-mode-map
+          (kbd "< (") 'paredit-backward-slurp-sexp
+          (kbd "> )") 'paredit-forward-slurp-sexp
+          (kbd "> (") 'paredit-backward-barf-sexp
+          (kbd "< )") 'paredit-forward-barf-sexp
+          (kbd "W") 'paredit-forward
+          (kbd "B") 'paredit-backward)
   :config (progn
             (cl-labels ((enable-paredit (hook) (add-hook hook #'enable-paredit-mode)))
               (mapc #'enable-paredit '(emacs-lisp-mode-hook
