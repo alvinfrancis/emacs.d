@@ -72,13 +72,13 @@
    ;;; basic coloring
    `(cursor ((,class (:foreground ,erosion-fg))))
    `(default ((,class (:foreground ,erosion-fg :background ,erosion-bg))))
-   `(fringe ((,class (:foreground ,erosion-cyan :background ,erosion-bg-1))))
+   `(fringe ((,class (:foreground ,erosion-cyan :background ,erosion-bg))))
    `(escape-glyph-face ((,class (:foreground ,erosion-red))))
    `(header-line ((,class (:foreground ,erosion-yellow
                                        :background ,erosion-bg-1
                                        :box (:line-width 1 :color ,erosion-bg-1)))))
    `(hl-line ((,class (:background ,erosion-bg+1))))
-   `(linum ((,class (:foreground "#505050" :background ,erosion-bg-1))))
+   `(linum ((,class (:foreground "#505050" :background ,erosion-bg))))
    `(minibuffer-prompt ((,class (:foreground ,erosion-yellow))))
    `(menu ((,class (:foreground ,erosion-fg :background ,erosion-bg))))
    `(mode-line
@@ -97,7 +97,7 @@
    `(region ((,class (:background ,erosion-bg+2))))
    `(secondary-selection ((,class (:background ,erosion-bg+2))))
    `(trailing-whitespace ((,class (:background ,erosion-red))))
-   `(vertical-border ((,class (:foreground ,erosion-fg))))
+   `(vertical-border ((,class (:foreground ,erosion-bg))))
 
    ;; faces used by isearch
    `(isearch ((,class (:foreground ,erosion-yellow :background ,erosion-bg-1))))
