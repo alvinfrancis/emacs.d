@@ -614,6 +614,10 @@
 
 (req-package iedit)
 
+(req-package browse-url
+  :require eww
+  :init (setq browse-url-function #'eww-browse-url))
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (req-package smerge-mode
