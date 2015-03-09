@@ -616,6 +616,15 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+(req-package smerge-mode
+  :config (progn
+            (defun sm-try-smerge ()
+              (save-excursion
+                (goto-char (point-min))
+                (when (re-search-forward "^<<<<<<< " nil t)
+                  (smerge-mode 1))))
+            (add-hook 'find-file-hook 'sm-try-smerge t)))
+
 ;;;; Elisp Libraries
 (req-package alert
   :init (setq alert-default-style 'notifier))
