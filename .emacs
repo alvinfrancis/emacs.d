@@ -201,7 +201,8 @@
   :require (evil paredit)
   :init (evil-define-key 'normal slime-mode-map
           (kbd ", x e") 'slime-eval-last-expression
-          (kbd ", x x") 'slime-eval-defun)
+          (kbd ", x x") 'slime-eval-defun
+          (kbd ", x p") 'slime-pprint-eval-last-expression)
   :config (progn
             (slime-setup '(slime-fancy slime-asdf))
             (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)))
