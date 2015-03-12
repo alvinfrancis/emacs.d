@@ -381,9 +381,8 @@
 (req-package evil
   :require (key-chord ace-jump-mode flymake)
   :init (progn
-          (setq
-           evil-move-cursor-back nil
-           evil-search-module 'evil-search)
+          (setq evil-move-cursor-back nil
+                evil-search-module 'evil-search)
 
           (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
           (key-chord-define evil-replace-state-map "jj" 'evil-normal-state)
