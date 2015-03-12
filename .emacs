@@ -383,6 +383,9 @@
   :init (progn
           (setq evil-move-cursor-back nil
                 evil-search-module 'evil-search)
+          (setq-default x-select-enable-clipboard nil
+                        interprogram-cut-function nil
+                        interprogram-paste-function nil)
 
           (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
           (key-chord-define evil-replace-state-map "jj" 'evil-normal-state)
