@@ -305,6 +305,8 @@
             (kbd ", x e") 'cider-eval-last-sexp
             (kbd ", x r") 'cider-eval-region
             (kbd ", x x") 'cider-eval-defun-at-point)
+          (evil-define-key 'normal cider-popup-buffer-mode-map
+            "q" 'cider-popup-buffer-quit-function)
           (evil-define-key 'normal cider-stacktrace-mode-map
             "q" 'cider-popup-buffer-quit-function)
           (evil-define-key 'normal cider-docview-mode-map
