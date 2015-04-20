@@ -171,7 +171,7 @@
 
 (req-package powerline
   :require evil
-  :init (setf powerline-default-separator 'arrow)
+  :init (setf powerline-default-separator nil)
   :config (progn
             (defadvice load-theme (after reset-powerline activate)
               (powerline-reset))
