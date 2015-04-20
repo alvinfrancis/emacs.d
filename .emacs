@@ -462,6 +462,7 @@
 (req-package magit
   :require (evil hl-line)
   :init (progn
+          (setq magit-last-seen-setup-instructions "1.4.0")
           (evil-ex-define-cmd "Gstatus" #'magit-status)
           (evil-ex-define-cmd "Gs" "Gstatus"))
   :config (progn
