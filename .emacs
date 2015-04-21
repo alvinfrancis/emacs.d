@@ -446,7 +446,8 @@
 
 (req-package evil-visualstar
   ;; Problems with using n and N to continue the search
-  :require evil)
+  :require evil
+  :config (global-evil-visualstar-mode))
 
 (req-package evil-leader
   :require evil)
