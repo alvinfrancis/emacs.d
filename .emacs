@@ -414,6 +414,18 @@
               "Comment operator that can work with evil-motions."
               (comment-or-uncomment-region beg end))
 
+            ;; Matching Vim's set hls behaviour
+            (evil-ex-define-cmd "hls"
+                                #'(lambda ()
+                                    (interactive)
+                                    (setf evil-ex-search-highlight-all t)
+                                    (evil-ex-search-activate-highlight evil-ex-search-pattern)))
+            (evil-ex-define-cmd "nohls"
+                                #'(lambda ()
+                                    (interactive)
+                                    (setf evil-ex-search-highlight-all nil)
+                                    (evil-ex-nohighlight)))
+
             (unbind-key (kbd "K") evil-motion-state-map)
             (unbind-key (kbd "C-n") evil-insert-state-map)
             (unbind-key (kbd "C-p") evil-insert-state-map)
