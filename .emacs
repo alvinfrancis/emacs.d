@@ -510,11 +510,6 @@
             ;; 'visual-line-adaptive-wrap-prefix-mode)
  ))
 
-(req-package popwin
-  :require helm
-  :init (push '("^\*helm.+\*$" :regexp t :height 20) popwin:special-display-config)
-  :config (popwin-mode 1))
-
 (req-package projectile)
 
 (req-package helm
