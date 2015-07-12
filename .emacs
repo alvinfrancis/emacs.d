@@ -167,7 +167,13 @@
             (elscreen-start)))
 
 (req-package rainbow-delimiters
-  :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  :init (progn
+          (setq rainbow-delimiters-max-face-count 1)
+          (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  :config (progn
+            (set-face-attribute 'rainbow-delimiters-unmatched-face nil
+                                :foreground 'unspecified
+                                :inherit 'error)))
 
 (req-package powerline
   :require evil
