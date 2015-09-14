@@ -647,6 +647,9 @@
                       (shell-dirtrack-mode t)
                       (setq dirtrackp nil))))
 
+(req-package tramp
+  :init (setq tramp-default-method "ssh"))
+
 (req-package browse-url
   :require eww
   :init (setq browse-url-function #'eww-browse-url))
