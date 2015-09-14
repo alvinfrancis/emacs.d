@@ -640,6 +640,13 @@
 
 (req-package iedit)
 
+(req-package ssh
+  :config (add-hook 'ssh-mode-hook
+                    (lambda ()
+                      (setq ssh-directory-tracking-mode t)
+                      (shell-dirtrack-mode t)
+                      (setq dirtrackp nil))))
+
 (req-package browse-url
   :require eww
   :init (setq browse-url-function #'eww-browse-url))
