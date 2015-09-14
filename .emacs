@@ -80,7 +80,8 @@
                 org-src-fontify-natively t
                 org-tags-exclude-from-inheritance (quote ("crypt"))
                 org-crypt-key "alvin.francis.dumalus@gmail.com"
-                org-hide-emphasis-markers t)
+                org-hide-emphasis-markers t
+                org-adapt-indentation nil)
           (set-face-attribute 'org-block-background nil
                               :background "#070707")
           (set-face-attribute 'org-block-begin-line nil
