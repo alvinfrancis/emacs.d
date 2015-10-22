@@ -325,7 +325,9 @@
   :config (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
 
 (req-package ac-cider
-  :require cider)
+  :require (cider auto-complete)
+  :config (progn
+            (bind-key (kbd "C-c C-d") 'ac-cider-popup-doc cider-mode-map)))
 
 (req-package clojure-mode
   :require (evil)
