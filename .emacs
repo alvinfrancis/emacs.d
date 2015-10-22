@@ -237,7 +237,7 @@
                 "URL base for constructing slick links.")
 
               (defun ensime-make-slick-doc-url-helper
-                (url-base type &optional member)
+                  (url-base type &optional member)
                 "Given a scala type, and optionally a type member,
    construct the corresponding slick url.  Currently does not
    narrow down to member"
