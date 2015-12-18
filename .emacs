@@ -67,7 +67,7 @@
  delete-by-moving-to-trash t
  trash-directory "~/.Trash"             ; play well with Trash
  ns-use-native-fullscreen nil
-)
+ )
 
 (defun fullscreen-toggle ()
   (interactive)
