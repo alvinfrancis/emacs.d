@@ -23,6 +23,7 @@
 ;; clean UI
 (setq
  scroll-margin 100          ; TODO: look into a better centering mechanism
+ scroll-conservatively 100
  initial-scratch-message "" ; maybe make this into cowsay
  inhibit-splash-screen t
  )
