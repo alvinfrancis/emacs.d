@@ -658,6 +658,7 @@
 
 (req-package multiple-cursors
   :require evil
+  :disabled t
   :init (progn
           (global-set-key (kbd "s-<up>") 'mc/mark-previous-like-this)
           (global-set-key (kbd "s-<down>") 'mc/mark-next-like-this)
