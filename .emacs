@@ -249,8 +249,8 @@
               ido-everywhere t)
   :config (ido-mode 1))
 
-(when window-system
-  (req-package git-gutter-fringe+))
+(req-package git-gutter-fringe+
+  :if window-system)
 
 ;;;; Languages
 (req-package ensime
