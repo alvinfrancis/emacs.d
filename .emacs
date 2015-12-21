@@ -100,6 +100,7 @@
 ;;;; Org-mode
 (req-package org
   :require (htmlize evil)
+  :commands org-mode
   :init (progn
           (require 'org-crypt)
           (setq org-fontify-quote-and-verse-blocks t
@@ -128,6 +129,7 @@
 
 (req-package org-journal
   :require org
+  :commands org-journal-mode
   :init (progn
           (setq org-journal-file-format "%Y-%m-%d.org")
           (add-hook 'org-journal-mode-hook 'auto-fill-mode)))
@@ -197,6 +199,7 @@
   :init (progn
           (setq rainbow-delimiters-max-face-count 1)
           (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  :commands rainbow-delimiters-mode
   :config (progn
             (set-face-attribute 'rainbow-delimiters-unmatched-face nil
                                 :foreground 'unspecified
@@ -236,6 +239,7 @@
           (kbd ", x e") 'slime-eval-last-expression
           (kbd ", x x") 'slime-eval-defun
           (kbd ", x p") 'slime-pprint-eval-last-expression)
+  :command slime
   :config (progn
             (slime-setup '(slime-fancy slime-asdf))
             (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)))
@@ -278,6 +282,7 @@
             (add-hook 'ensime-connected-hook 'setup-ensime)))
 
 (req-package scala-mode
+  :commands scala-mode
   :config (progn
             (add-hook 'scala-mode-hook
                       (lambda ()
@@ -295,7 +300,8 @@
 
 (req-package trident-mode
   :require (slime skewer-mode)
-  :init (add-to-list 'auto-mode-alist (cons "\\.paren\\'" 'lisp-mode))
+  :mode ("\\.paren\\'" . lisp-mode)
+  :commands trident-mode
   :config (progn
             (add-hook 'lisp-mode-hook
                       (lambda ()
@@ -309,6 +315,7 @@
 
 (req-package csharp-mode
   :require electric
+  :commands csharp-mode
   :config (progn
             (electric-indent-mode t)
             (add-hook 'csharp-mode-hook
@@ -319,12 +326,12 @@
                                                     (?\< . ?\>)))))))
 
 (req-package vimrc-mode
-  :config (add-to-list 'auto-mode-alist '(".vim\\(rc\\)?$" . vimrc-mode)))
+  :mode (".vim\\(rc\\)?$" . vimrc-mode))
 
 (req-package js2-mode)
 
 (req-package jsx-mode
-  :config (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode)))
+  :mode ("\\.jsx\\'" . jsx-mode))
 
 (req-package web-mode
   :require evil
@@ -335,6 +342,7 @@
 
 (req-package cider
   :require evil
+  :commands cider-mode
   :init (progn
           (evil-define-key 'normal cider-mode-map
             (kbd ", x p") 'cider-eval-print-last-sexp
@@ -352,8 +360,8 @@
 
 (req-package ac-cider
   :require (cider auto-complete)
-  :config (progn
-            (bind-key (kbd "C-c C-d") 'ac-cider-popup-doc cider-mode-map)))
+  :bind (:map cider-mode-map
+              ("C-c C-d" . ac-cider-popup-doc)))
 
 (req-package clojure-mode
   :require (evil)
@@ -418,7 +426,8 @@
               (setq-local tab-width 2))))
 
 ;; YAML
-(req-package yaml-mode)
+(req-package yaml-mode
+  :commands yaml-mode)
 
 (req-package eldoc
   :config (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
@@ -530,7 +539,8 @@
 
 (req-package hippie-exp
   :require evil
-  :config (bind-key "M-TAB" 'hippie-expand evil-insert-state-map))
+  :bind (:map evil-insert-state-map
+              ("M-TAB" . hippie-expand)))
 
 (req-package key-chord
   :init (setq key-chord-one-key-delay 1.0
@@ -594,10 +604,11 @@
   :require helm)
 
 (req-package auto-complete
+  :bind (:map ac-complete-mode-map
+              ("C-n" . ac-next)
+              ("C-p" . ac-previous))
   :require evil
-  :config (bind-keys :map ac-complete-mode-map
-                     ("C-n" . ac-next)
-                     ("C-p" . ac-previous)))
+  :config (ac-config-default))
 
 (req-package helm-ag)
 
@@ -635,15 +646,15 @@
      "python -mjson.tool" (current-buffer) t)))
 
 (req-package which-func
-  :init (progn
-          (defun clone-buffer-and-narrow-to-function ()
-            (interactive)
-            (clone-indirect-buffer-other-window (which-function) 'pop-to-buffer)
-            (mark-defun) ; works not only in emacs-lisp, but C++, Python, ...
-            (narrow-to-region (mark) (point))
-            (pop-mark)
-            (other-window 1))
-          (define-key global-map (kbd "C-x 4 n") 'clone-buffer-and-narrow-to-function))) ; or whatever key you prefer
+  :bind ("C-x 4 n" . clone-buffer-and-narrow-to-function)
+  :commands which-function
+  :init (defun clone-buffer-and-narrow-to-function ()
+          (interactive)
+          (clone-indirect-buffer-other-window (which-function) 'pop-to-buffer)
+          (mark-defun) ; works not only in emacs-lisp, but C++, Python, ...
+          (narrow-to-region (mark) (point))
+          (pop-mark)
+          (other-window 1)))
 
 (req-package multiple-cursors
   :require evil
@@ -659,15 +670,15 @@
 
 (req-package highlight
   :require evil
-  :config (bind-keys
-           :map evil-normal-state-map
-           (", h h" . hlt-highlight-symbol)
-           (", h x" . hlt-unhighlight-symbol)))
+  :bind (:map evil-normal-state-map
+              (", h h" . hlt-highlight-symbol)
+              (", h x" . hlt-unhighlight-symbol)))
 
 (req-package exec-path-from-shell
   :config (exec-path-from-shell-initialize))
 
-(req-package iedit)
+(req-package iedit
+  :bind ("C-;" . iedit-mode))
 
 (req-package ssh
   :config (add-hook 'ssh-mode-hook
@@ -686,13 +697,14 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (req-package smerge-mode
-  :config (progn
-            (defun sm-try-smerge ()
-              (save-excursion
-                (goto-char (point-min))
-                (when (re-search-forward "^<<<<<<< " nil t)
-                  (smerge-mode 1))))
-            (add-hook 'find-file-hook 'sm-try-smerge t)))
+  :commands smerge-mode
+  :init (progn
+          (defun sm-try-smerge ()
+            (save-excursion
+              (goto-char (point-min))
+              (when (re-search-forward "^<<<<<<< " nil t)
+                (smerge-mode 1))))
+          (add-hook 'find-file-hook 'sm-try-smerge t)))
 
 ;;;; Elisp Libraries
 (req-package alert
