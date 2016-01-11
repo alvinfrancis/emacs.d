@@ -373,7 +373,11 @@
               (DELETE 2)
               (HEAD 2)
               (ANY 2)
-              (context 2))
+              (context 2)
+              (match 1))
+            (put-clojure-indent 'reify '(:defn (1)))
+            (put-clojure-indent 'defprotocol '(:defn (1)))
+            (put-clojure-indent 'this-as '(:defn (1)))
             (evil-define-key 'normal clojure-mode-map
               (kbd "C-c C-e") 'lisp-eval-last-sexp
               (kbd "C-c C-c") 'lisp-eval-defun
