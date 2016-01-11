@@ -345,7 +345,8 @@
           (evil-define-key 'normal cider-mode-map
             (kbd ", x p") 'cider-eval-print-last-sexp
             (kbd ", x e") 'cider-eval-last-sexp
-            (kbd ", x x") 'cider-eval-defun-at-point)
+            (kbd ", x x") 'cider-eval-defun-at-point
+            (kbd "C-]") 'cider-jump-to-var)
           (evil-define-key 'visual cider-mode-map
             (kbd ", x r") 'cider-eval-region)
           (evil-define-key 'normal cider-popup-buffer-mode-map
