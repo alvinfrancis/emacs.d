@@ -276,9 +276,7 @@
               (defun ensime-make-slick-doc-url (type &optional member)
                 (ensime-make-slick-doc-url-helper
                  ensime-slickdoc-url-base type member))
-
-              (unless (assoc ensime-slick-prefix ensime-doc-lookup-map)
-                (add-to-list 'ensime-doc-lookup-map `(,ensime-slick-prefix . ensime-make-slick-doc-url))))
+              )
             (add-hook 'ensime-connected-hook 'setup-ensime)))
 
 (req-package scala-mode
