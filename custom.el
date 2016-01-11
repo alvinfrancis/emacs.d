@@ -8,7 +8,12 @@
  '(elscreen-tab-other-screen-face ((t (:inherit linum))))
  '(fringe ((t (:inherit default :background nil))))
  '(linum ((t (:inherit default :box nil :height 0.8 :background nil))))
- '(magit-item-highlight ((t nil))))
+ '(magit-item-highlight ((t nil)))
+ '(mode-line-inactive ((t (:inherit default :background nil))))
+ '(powerline-active1 ((t (:inherit default :background nil))))
+ '(powerline-active2 ((t (:inherit default :background nil))))
+ '(powerline-inactive1 ((t (:inherit default :background nil))))
+ '(powerline-inactive2 ((t (:inherit default :background nil)))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
