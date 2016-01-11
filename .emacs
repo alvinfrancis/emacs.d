@@ -380,7 +380,8 @@
             (put-clojure-indent 'this-as '(:defn (1)))
             (evil-define-key 'normal clojure-mode-map
               (kbd "C-c C-e") 'lisp-eval-last-sexp
-              (kbd "C-c C-c") 'lisp-eval-defun
+              (kbd "C-c C-c") 'lisp-eval-defun)
+            (evil-define-key 'visual clojure-mode-map
               (kbd "C-c C-r") 'lisp-eval-region)))
 
 (req-package clojure-cheatsheet
