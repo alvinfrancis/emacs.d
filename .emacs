@@ -379,7 +379,8 @@
               (kbd "C-c C-c") 'lisp-eval-defun
               (kbd "C-c C-r") 'lisp-eval-region)))
 
-(req-package clojure-cheatsheet)
+(req-package clojure-cheatsheet
+  :commands clojure-cheatsheet)
 
 ;; SQL
 (req-package sql
