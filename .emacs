@@ -151,8 +151,9 @@
                       (face-attribute 'default :background)))
 
 (req-package linum
-  :init (setq linum-format " %d ")
-  :config (progn (add-hook 'prog-mode-hook 'linum-mode)))
+  :init (progn
+          (setq linum-format " %d ")
+          (add-hook 'prog-mode-hook 'linum-mode)))
 
 (req-package paren
   :config (show-paren-mode t))
