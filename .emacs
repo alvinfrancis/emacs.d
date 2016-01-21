@@ -365,6 +365,7 @@
 
 (req-package clojure-mode
   :require (evil)
+  :commands clojure-mode
   :config (progn
             (define-clojure-indent
               (defroutes 'defun)
