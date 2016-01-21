@@ -325,6 +325,7 @@
                                                     (?\< . ?\>)))))))
 
 (req-package vimrc-mode
+  :commands vimrc-mode
   :mode (".vim\\(rc\\)?$" . vimrc-mode))
 
 (req-package js2-mode)
