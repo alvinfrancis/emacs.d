@@ -83,8 +83,6 @@
  auto-save-default nil
  create-lockfiles nil
  make-backup-files nil
- recentf-mode t
- recentf-max-saved-items 500
  visible-bell t                         ; prefer visual over beeping
  fill-column 80
  )
@@ -618,6 +616,13 @@
               ("C-p" . ac-previous))
   :require evil
   :config (ac-config-default))
+
+(req-package recentf
+  :demand t
+  :init (progn
+          (setq
+           recentf-mode t
+           recentf-max-saved-items 500)))
 
 (req-package helm-ag)
 
