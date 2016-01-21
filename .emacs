@@ -156,6 +156,7 @@
           (add-hook 'prog-mode-hook 'linum-mode)))
 
 (req-package paren
+  :defer 60
   :config (show-paren-mode t))
 
 (req-package git-gutter+
