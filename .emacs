@@ -215,23 +215,23 @@
 
 (req-package paredit
   :require (cl evil)
-  :init (evil-define-key 'normal paredit-mode-map
-          (kbd "< (") 'paredit-backward-slurp-sexp
-          (kbd "> )") 'paredit-forward-slurp-sexp
-          (kbd "> (") 'paredit-backward-barf-sexp
-          (kbd "< )") 'paredit-forward-barf-sexp
-          (kbd "W") 'paredit-forward
-          (kbd "B") 'paredit-backward)
-  :config (progn
-            (cl-labels ((enable-paredit (hook) (add-hook hook #'enable-paredit-mode)))
-              (mapc #'enable-paredit '(emacs-lisp-mode-hook
-                                       cider-repl-mode-hook
-                                       eval-expression-minibuffer-setup-hook
-                                       clojure-mode-hook
-                                       ielm-mode-hook
-                                       lisp-mode-hook
-                                       lisp-interaction-mode-hook
-                                       scheme-mode-hook)))))
+  :init (progn
+          (dolist (hook '(emacs-lisp-mode-hook
+                          cider-repl-mode-hook
+                          eval-expression-minibuffer-setup-hook
+                          clojure-mode-hook
+                          ielm-mode-hook
+                          lisp-mode-hook
+                          lisp-interaction-mode-hook
+                          scheme-mode-hook))
+            (add-hook hook 'enable-paredit-mode))
+          (evil-define-key 'normal paredit-mode-map
+            (kbd "< (") 'paredit-backward-slurp-sexp
+            (kbd "> )") 'paredit-forward-slurp-sexp
+            (kbd "> (") 'paredit-backward-barf-sexp
+            (kbd "< )") 'paredit-forward-barf-sexp
+            (kbd "W") 'paredit-forward
+            (kbd "B") 'paredit-backward)))
 
 (req-package slime
   :require (evil paredit)
