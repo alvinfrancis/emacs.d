@@ -326,7 +326,8 @@
   :commands vimrc-mode
   :mode (".vim\\(rc\\)?$" . vimrc-mode))
 
-(req-package js2-mode)
+(req-package js2-mode
+  :commands js2-mode)
 
 (req-package jsx-mode
   :mode ("\\.jsx\\'" . jsx-mode))
