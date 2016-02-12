@@ -604,7 +604,7 @@
   :bind (:map ac-complete-mode-map
               ("C-n" . ac-next)
               ("C-p" . ac-previous))
-  :require evil
+  :demand t
   :config (ac-config-default))
 
 (req-package recentf
