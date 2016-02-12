@@ -389,6 +389,9 @@
             (evil-define-key 'visual clojure-mode-map
               (kbd "C-c C-r") 'lisp-eval-region)))
 
+(req-package inf-clojure
+  :commands inf-clojure)
+
 (req-package clojure-cheatsheet
   :commands clojure-cheatsheet)
 
