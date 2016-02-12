@@ -299,16 +299,16 @@
   :require (slime skewer-mode)
   :mode ("\\.paren\\'" . lisp-mode)
   :commands trident-mode
-  :config (progn
-            (add-hook 'lisp-mode-hook
-                      (lambda ()
-                        (when (and buffer-file-name
-                                   (string-match-p "\\.paren\\>" buffer-file-name))
-                          (unless (slime-connected-p)
-                            (save-excursion (slime)))
-                          (trident-mode +1))))
-            (add-hook 'trident-mode-hook
-                      (lambda () (trident-add-keys-with-prefix "C-c C-e")))))
+  :init (progn
+          (add-hook 'lisp-mode-hook
+                    (lambda ()
+                      (when (and buffer-file-name
+                                 (string-match-p "\\.paren\\>" buffer-file-name))
+                        (unless (slime-connected-p)
+                          (save-excursion (slime)))
+                        (trident-mode +1))))
+          (add-hook 'trident-mode-hook
+                    (lambda () (trident-add-keys-with-prefix "C-c C-e")))))
 
 (req-package csharp-mode
   :require electric
