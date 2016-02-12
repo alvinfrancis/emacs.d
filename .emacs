@@ -623,7 +623,9 @@
            ("\\ p p" . helm-projectile)
            ("\\ p a" . helm-projectile-ag)))
 
-(req-package eval-sexp-fu)
+(req-package eval-sexp-fu
+  :defer 10)
+
 
 (req-package restclient)
 
