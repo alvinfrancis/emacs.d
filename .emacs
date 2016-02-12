@@ -235,14 +235,14 @@
 
 (req-package slime
   :require (evil paredit)
-  :init (evil-define-key 'normal slime-mode-map
-          (kbd ", x e") 'slime-eval-last-expression
-          (kbd ", x x") 'slime-eval-defun
-          (kbd ", x p") 'slime-pprint-eval-last-expression)
-  :command slime
-  :config (progn
-            (slime-setup '(slime-fancy slime-asdf))
-            (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)))
+  :init (progn
+          (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
+          (evil-define-key 'normal slime-mode-map
+            (kbd ", x e") 'slime-eval-last-expression
+            (kbd ", x x") 'slime-eval-defun
+            (kbd ", x p") 'slime-pprint-eval-last-expression))
+  :commands slime
+  :config (slime-setup '(slime-fancy slime-asdf)))
 
 (req-package ido
   :init (setq ido-enable-flex-matching t
