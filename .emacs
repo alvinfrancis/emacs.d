@@ -699,11 +699,11 @@
   :bind ("C-;" . iedit-mode))
 
 (req-package ssh
-  :config (add-hook 'ssh-mode-hook
-                    (lambda ()
-                      (setq ssh-directory-tracking-mode t)
-                      (shell-dirtrack-mode t)
-                      (setq dirtrackp nil))))
+  :init (add-hook 'ssh-mode-hook
+                  (lambda ()
+                    (setq ssh-directory-tracking-mode t)
+                    (shell-dirtrack-mode t)
+                    (setq dirtrackp nil))))
 
 (req-package tramp
   :init (setq tramp-default-method "ssh"))
