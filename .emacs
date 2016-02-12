@@ -636,8 +636,9 @@
 (req-package eval-sexp-fu
   :defer 10)
 
+(req-package restclient
+  :commands restclient-mode)
 
-(req-package restclient)
 
 (cl-labels
     ((package-menu-evil ()
