@@ -330,6 +330,8 @@
   :commands js2-mode)
 
 (req-package jsx-mode
+  :init (setf jsx-indent-level 2)
+  :commands jsx-mode
   :mode ("\\.jsx\\'" . jsx-mode))
 
 (req-package web-mode
