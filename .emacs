@@ -443,7 +443,7 @@
   :commands yaml-mode)
 
 (req-package eldoc
-  :config (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
+  :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
 
 ;;;; Evil
 (req-package evil
