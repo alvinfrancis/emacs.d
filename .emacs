@@ -533,6 +533,12 @@
                       (lambda ()
                         (hl-line-mode)))
             (bind-key "<f10>" 'magit-status evil-normal-state-map)))
+(req-package git-timemachine
+  :require evil
+  :commands git-timemachine-toggle
+  :init (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)
+  :config (evil-make-overriding-map git-timemachine-mode-map 'normal))
+
 
 (req-package hippie-exp
   :require evil
