@@ -448,25 +448,31 @@
 ;;;; Evil
 (req-package evil
   :require (key-chord ace-jump-mode flymake)
+  :demand t
   :init (setq evil-move-cursor-back nil
               evil-search-module 'evil-search
-              evil-want-fine-undo nil)
+              evil-want-fine-undo nil
+              evil-want-Y-yank-to-eol "Y")
+  :bind (:map evil-normal-state-map
+              (";" . evil-ex)
+              ("<left>" . evil-prev-buffer)
+              ("<right>" . evil-next-buffer)
+              ("g c" . evil-toggle-comment)
+              (", x p" . eval-print-last-sexp)
+              (", x e" . eval-last-sexp)
+              (", x x" . eval-defun)
+              (", x r" . eval-region))
+  :bind (:map evil-visual-state-map
+              (";" . evil-ex))
+  :bind (:map evil-motion-state-map
+              ("s-f" . evil-ace-jump-char-mode)
+              ("C-u" . evil-scroll-up)
+              ("-" . evil-jump-up)
+              ("SPC" . evil-jump-down)
+              (":" . evil-repeat-find-char))
   :config (progn
             (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
             (key-chord-define evil-replace-state-map "jj" 'evil-normal-state)
-
-            (defun evil-yank-to-end-of-line ()
-              "Yank to end of line"
-              (interactive)
-              (evil-yank (point) (point-at-eol)))
-            (defun evil-search-word-forward-stay ()
-              (interactive)
-              (evil-search-word-backward)
-              (evil-search-word-forward))
-            (defun evil-search-word-backward-stay ()
-              (interactive)
-              (evil-search-word-forward)
-              (evil-search-word-backward))
 
             (evil-define-motion evil-ace-jump-char-mode (count)
               :type exclusive
@@ -495,32 +501,10 @@
             (unbind-key (kbd "K") evil-motion-state-map)
             (unbind-key (kbd "C-n") evil-insert-state-map)
             (unbind-key (kbd "C-p") evil-insert-state-map)
-            (bind-keys
-             :map evil-normal-state-map
-             (";" . evil-ex)
-             ("<left>" . evil-prev-buffer)
-             ("<right>" . evil-next-buffer)
-             ("Y" . evil-yank-to-end-of-line)
-             ("g c" . evil-toggle-comment)
-             (", x p" . eval-print-last-sexp)
-             (", x e" . eval-last-sexp)
-             (", x x" . eval-defun)
-             (", x r" . eval-region))
-            (bind-keys
-             :map evil-visual-state-map
-             (";" . evil-ex))
-            (bind-keys
-             :map evil-motion-state-map
-             ("s-f" . evil-ace-jump-char-mode)
-             ("C-u" . evil-scroll-up)
-             ("-" . evil-jump-up)
-             ("SPC" . evil-jump-down)
-             (":" . evil-repeat-find-char)
-             ("*" . evil-search-word-forward-stay)
-             ("#" . evil-search-word-backward-stay))
 
             (add-hook 'ace-jump-mode-end-hook 'exit-recursive-edit)
-            (evil-mode t)))
+            (evil-mode t))
+  )
 
 (req-package evil-visualstar
   ;; Problems with using n and N to continue the search
