@@ -539,6 +539,10 @@
   :init (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)
   :config (evil-make-overriding-map git-timemachine-mode-map 'normal))
 
+(req-package undo-tree
+  :init (progn
+          (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.undo")))
+          (setq undo-tree-auto-save-history t)))
 
 (req-package hippie-exp
   :require evil
