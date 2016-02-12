@@ -358,8 +358,8 @@
           (evil-define-key 'normal cider-stacktrace-mode-map
             "q" 'cider-popup-buffer-quit-function)
           (evil-define-key 'normal cider-docview-mode-map
-            "q" 'cider-popup-buffer-quit-function))
-  :config (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode))
+            "q" 'cider-popup-buffer-quit-function)
+          (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)))
 
 (req-package ac-cider
   :require (cider auto-complete)
