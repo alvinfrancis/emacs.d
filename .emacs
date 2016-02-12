@@ -336,6 +336,7 @@
 
 (req-package web-mode
   :require evil
+  :commands web-mode
   :init (progn
           (setq web-mode-code-indent-offset 2)
           (evil-define-key 'operator web-mode-map
