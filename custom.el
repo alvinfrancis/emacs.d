@@ -32,7 +32,6 @@
  '(electric-pair-mode t)
  '(fci-rule-color "#49483E")
  '(fringe-mode nil nil (fringe))
- '(global-auto-complete-mode t)
  '(highlight-changes-colors ("#FD5FF0" "#AE81FF"))
  '(highlight-tail-colors
    (("#49483E" . 0)
