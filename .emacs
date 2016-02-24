@@ -346,6 +346,7 @@
   :require evil
   :commands cider-mode
   :init (progn
+          (setq cider-repl-display-help-banner nil)
           (evil-define-key 'normal cider-mode-map
             (kbd ", x p") 'cider-eval-print-last-sexp
             (kbd ", x e") 'cider-eval-last-sexp
