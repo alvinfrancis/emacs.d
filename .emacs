@@ -29,7 +29,7 @@
  )
 
 (menu-bar-mode -1)
-(if window-system
+(if (display-graphic-p)
     (progn
       ;; Remove GUI cruft even in GUI Emacs
       (scroll-bar-mode -1)
@@ -250,7 +250,7 @@
   :config (ido-mode 1))
 
 (req-package git-gutter-fringe+
-  :if window-system)
+  :if (display-graphic-p))
 
 ;;;; Languages
 (req-package ensime
