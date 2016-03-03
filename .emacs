@@ -453,7 +453,7 @@
   :init (setq evil-move-cursor-back nil
               evil-search-module 'evil-search
               evil-want-fine-undo nil
-              evil-want-Y-yank-to-eol "Y")
+              evil-want-Y-yank-to-eol t)
   :bind (:map evil-normal-state-map
               (";" . evil-ex)
               ("<left>" . evil-prev-buffer)
