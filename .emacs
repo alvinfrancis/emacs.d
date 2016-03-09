@@ -642,20 +642,20 @@
   :commands restclient-mode)
 
 
-(cl-labels
-    ((package-menu-evil ()
-       (progn
-         (evil-normal-state)
-         (bind-keys
-          :map evil-normal-state-local-map
-          ("i" . package-menu-mark-install)
-          ("d" . package-menu-mark-delete)
-          ("U" . package-menu-mark-upgrades)
-          ("u" . package-menu-mark-unmark)
-          ("RET" . package-menu-describe-package)
-          ("q" . quit-window)
-          ("x" . package-menu-execute)))))
-  (add-hook 'package-menu-mode-hook #'package-menu-evil))
+(req-package package
+  :init (cl-labels ((package-menu-evil ()
+                                       (progn
+                                         (evil-normal-state)
+                                         (bind-keys
+                                          :map evil-normal-state-local-map
+                                          ("i" . package-menu-mark-install)
+                                          ("d" . package-menu-mark-delete)
+                                          ("U" . package-menu-mark-upgrades)
+                                          ("u" . package-menu-mark-unmark)
+                                          ("RET" . package-menu-describe-package)
+                                          ("q" . quit-window)
+                                          ("x" . package-menu-execute)))))
+          (add-hook 'package-menu-mode-hook #'package-menu-evil)))
 
 (defun beautify-json ()
   (interactive)
