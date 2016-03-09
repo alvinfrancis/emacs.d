@@ -434,10 +434,11 @@
   (help-prefix (kbd "C-v") 'find-variable))
 
 ;; HTML
-(add-hook 'html-mode-hook
-          (lambda ()
-            (progn
-              (setq-local tab-width 2))))
+(req-package sgml-mode
+  :commands html-mode
+  :init (cl-labels ((local-vars ()
+                                (setq-local tab-width 2)))
+          (add-hook 'html-mode-hook #'local-vars)))
 
 ;; YAML
 (req-package yaml-mode
