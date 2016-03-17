@@ -686,6 +686,7 @@
                      ("C-p" . mc/mark-previous-like-this))))
 
 (req-package linum-relative
+  :commands (linum-relative-mode linum-relative-toggle)
   :init (setq linum-relative-format " %3s "))
 
 (req-package highlight
