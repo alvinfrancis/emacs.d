@@ -220,16 +220,16 @@
                           cider-repl-mode-hook
                           eval-expression-minibuffer-setup-hook
                           clojure-mode-hook
-                          ielm-mode-hook
                           lisp-mode-hook
                           lisp-interaction-mode-hook
                           scheme-mode-hook))
             (add-hook hook 'enable-paredit-mode))
           (evil-define-key 'normal paredit-mode-map
-            (kbd "< (") 'paredit-backward-slurp-sexp
-            (kbd "> )") 'paredit-forward-slurp-sexp
-            (kbd "> (") 'paredit-backward-barf-sexp
-            (kbd "< )") 'paredit-forward-barf-sexp
+            (kbd "< h" 'paredit-backward-slurp-sexp)
+            (kbd "> l") 'paredit-forward-slurp-sexp
+            (kbd "> h") 'paredit-backward-barf-sexp
+            (kbd "< l") 'paredit-forward-barf-sexp
+            (kbd "d s f") 'paredit-splice-sexp
             (kbd "W") 'paredit-forward
             (kbd "B") 'paredit-backward)))
 
