@@ -117,7 +117,17 @@
             (kbd "> >") 'org-indent-item
             (kbd "> t") 'org-indent-item-tree
             (kbd "< <") 'org-outdent-item
-            (kbd "< t") 'org-outdent-item-tree))
+            (kbd "< t") 'org-outdent-item-tree)
+          ;; Org-Capture
+          (setq org-directory "~/Documents/org")
+          (setq org-default-notes-file (concat org-directory "/notes.org"))
+          (setq org-capture-templates
+                '(("n" "Notes" entry (file+headline (concat org-directory "/notes.org") "Notes")
+                   "* %U\n %i\n%?"))))
+  :bind (:map evil-normal-state-map
+              (", , c" . org-capture))
+  :bind (:map evil-visual-state-map
+              (", , c" . org-capture))
   :config (progn
             (org-babel-do-load-languages
              'org-babel-load-languages
