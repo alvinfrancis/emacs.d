@@ -744,4 +744,4 @@
 
 (req-package-finish)
 (load custom-file)
-(load-theme 'fogus t)
+(load-theme 'atom-one-dark)
