@@ -470,6 +470,7 @@
               ("<left>" . evil-prev-buffer)
               ("<right>" . evil-next-buffer)
               ("g c" . evil-toggle-comment)
+              (", u" . universal-argument)
               (", x p" . eval-print-last-sexp)
               (", x e" . eval-last-sexp)
               (", x x" . eval-defun)
