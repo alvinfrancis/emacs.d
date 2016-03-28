@@ -235,7 +235,7 @@
                           scheme-mode-hook))
             (add-hook hook 'enable-paredit-mode))
           (evil-define-key 'normal paredit-mode-map
-            (kbd "< h" 'paredit-backward-slurp-sexp)
+            (kbd "< h") 'paredit-backward-slurp-sexp
             (kbd "> l") 'paredit-forward-slurp-sexp
             (kbd "> h") 'paredit-backward-barf-sexp
             (kbd "< l") 'paredit-forward-barf-sexp
