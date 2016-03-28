@@ -696,6 +696,23 @@
                      ("C-n" . mc/mark-next-like-this)
                      ("C-p" . mc/mark-previous-like-this))))
 
+(req-package evil-multiedit
+  :require (evil iedit key-chord)
+  :demand t
+  :bind (:map evil-normal-state-map
+              ("C-;" . evil-multiedit-match-all)
+              (", m" . evil-multiedit-match-and-next))
+  :bind (:map evil-visual-state-map
+              (", m" . evil-multiedit-match-and-next))
+  :bind (:map evil-multiedit-state-map
+              ("g x" . evil-multiedit-toggle-or-restrict-region)
+              ("C-;" . evil-multiedit-abort)
+              ("C-n" . evil-multiedit-match-and-next)
+              ("C-p" . evil-multiedit-match-and-prev)
+              ("g n" . evil-multiedit-next)
+              ("g p" . evil-multiedit-prev))
+  :config (key-chord-define evil-multiedit-insert-state-map "jj" 'evil-multiedit-state))
+
 (req-package linum-relative
   :commands (linum-relative-mode linum-relative-toggle)
   :init (setq linum-relative-format " %3s "))
@@ -708,9 +725,6 @@
 
 (req-package exec-path-from-shell
   :config (exec-path-from-shell-initialize))
-
-(req-package iedit
-  :bind ("C-;" . iedit-mode))
 
 (req-package ssh
   :init (add-hook 'ssh-mode-hook
