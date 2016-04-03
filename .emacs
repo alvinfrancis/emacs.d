@@ -224,7 +224,7 @@
             (powerline-center-evil-theme)))
 
 (req-package paredit
-  :require (cl evil)
+  :require evil
   :init (progn
           (dolist (hook '(emacs-lisp-mode-hook
                           cider-repl-mode-hook
