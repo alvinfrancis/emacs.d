@@ -631,6 +631,9 @@
            recentf-mode t
            recentf-max-saved-items 500)))
 
+(req-package lively
+  :commands lively)
+
 (req-package helm-ag)
 
 (req-package helm-projectile
@@ -646,6 +649,8 @@
 (req-package restclient
   :commands restclient-mode)
 
+(req-package esup
+  :commands esup)
 
 (req-package package
   :init (cl-labels ((package-menu-evil ()
