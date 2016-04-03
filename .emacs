@@ -583,7 +583,7 @@
 (req-package projectile)
 
 (req-package helm
-  :require (evil helm-ls-git)
+  :require evil
   :config (progn
             (set-face-attribute 'helm-selection nil
                                 :background "#505D6B"
