@@ -239,7 +239,8 @@
             (kbd "> l") 'paredit-forward-slurp-sexp
             (kbd "> h") 'paredit-backward-barf-sexp
             (kbd "< l") 'paredit-forward-barf-sexp
-            (kbd "d s f") 'paredit-splice-sexp
+            ;; NOTE: Inteferes with d-prefix keys
+            ;; (kbd "d s f") 'paredit-splice-sexp
             (kbd "W") 'paredit-forward
             (kbd "B") 'paredit-backward)))
 
