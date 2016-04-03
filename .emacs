@@ -98,7 +98,7 @@
 ;; --------------
 
 (req-package org
-  :require (htmlize evil)
+  :require evil
   :commands org-mode
   :init (progn
           (require 'org-crypt)
