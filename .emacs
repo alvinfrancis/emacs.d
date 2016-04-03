@@ -585,17 +585,6 @@
 (req-package helm
   :require evil
   :config (progn
-            (set-face-attribute 'helm-selection nil
-                                :background "#505D6B"
-                                :foreground "#B0E6FF"
-                                )
-            (set-face-attribute 'helm-source-header nil
-                                :background "#3E6B6B"
-                                :foreground "#7FFFFD"
-                                :underline nil
-                                :weight 'normal
-                                :height 1
-                                )
             (defun helm-files-mru ()
               (interactive)
               (helm :sources '(helm-source-recentf
