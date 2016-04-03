@@ -95,7 +95,8 @@
  word-wrap t                  ; but turn on word wrap if line wrapping
  )
 
-;;;; Org-mode
+;; --------------
+
 (req-package org
   :require (htmlize evil)
   :commands org-mode
@@ -146,10 +147,6 @@
   "Sets the transparency of the frame window. 0=transparent/100=opaque"
   (interactive "nTransparency Value 0 - 100 opaque:")
   (set-frame-parameter (selected-frame) 'alpha value))
-
-;; (req-package sublime-themes)
-;; (req-package monokai-theme)
-;; (req-package bubbleberry-theme)
 
 (defadvice load-theme (before theme-dont-propagate activate)
   (mapc #'disable-theme custom-enabled-themes))
@@ -263,7 +260,6 @@
 (req-package git-gutter-fringe+
   :if (display-graphic-p))
 
-;;;; Languages
 (req-package ensime
   :require evil
   :commands ensime
@@ -407,7 +403,6 @@
 (req-package clojure-cheatsheet
   :commands clojure-cheatsheet)
 
-;; SQL
 (req-package sql
   :init (progn
           (setq sql-product 'postgres
@@ -429,14 +424,12 @@
                           (split-string (buffer-substring start end) "\n")
                           " ")))))
 
-;; Lisp
 (add-hook 'lisp-mode-hook
           (lambda ()
             (set (make-local-variable 'lisp-indent-function)
                  'common-lisp-indent-function)))
 (setq inferior-lisp-program "/opt/local/bin/sbcl")
 
-;; Emacs Lisp
 (cl-labels ((help-prefix (key command)
                          (define-key 'help-command key command)))
   (help-prefix (kbd "C-f") 'find-function)
@@ -444,21 +437,18 @@
   (help-prefix (kbd "C-l") 'find-library)
   (help-prefix (kbd "C-v") 'find-variable))
 
-;; HTML
 (req-package sgml-mode
   :commands html-mode
   :init (cl-labels ((local-vars ()
                                 (setq-local tab-width 2)))
           (add-hook 'html-mode-hook #'local-vars)))
 
-;; YAML
 (req-package yaml-mode
   :commands yaml-mode)
 
 (req-package eldoc
   :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
 
-;;;; Evil
 (req-package evil
   :require (key-chord ace-jump-mode flymake)
   :demand t
@@ -535,7 +525,6 @@
   :require evil
   :config (evilem-default-keybindings "M-SPC"))
 
-;;;; Utilities
 (req-package magit
   :require (evil hl-line)
   :init (progn
@@ -751,7 +740,6 @@
                 (smerge-mode 1))))
           (add-hook 'find-file-hook 'sm-try-smerge t)))
 
-;;;; Elisp Libraries
 (req-package alert
   :init (setq alert-default-style 'notifier))
 
