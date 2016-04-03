@@ -598,13 +598,17 @@
              :map evil-normal-state-map
              (", ;" . helm-M-x)
              ("C-p" . helm-files-mru)
-             ("\\ f" . helm-browse-project)
              ("\\ b" . helm-buffers-list)
              ("\\ y" . helm-show-kill-ring)
              ("\\ m" . helm-imenu)
              ("\\ \\" . helm-resume))
             (bind-key ", ;" 'helm-M-x evil-visual-state-map)
             (helm-mode t)))
+
+(req-package helm-ls-git
+  :require (evil helm)
+  :bind (:map evil-normal-state-map
+              ("\\ f" . helm-browse-project)))
 
 (req-package helm-swoop
   :require (evil helm)
