@@ -8,14 +8,13 @@
                     ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
-;; req-package should ideally be loaded by something other than package
+;; use-package should ideally be loaded by something other than package
 ;; (package-refresh-contents)
 (mapc (lambda (p)
         (unless (package-installed-p p)
           (package-install p)))
-      '(use-package req-package))
-
-(require 'req-package)
+      '(use-package))
+(setq use-package-always-ensure t)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
@@ -95,58 +94,17 @@
  word-wrap t                  ; but turn on word wrap if line wrapping
  )
 
-;; --------------
-
-(req-package org
-  :require evil
-  :commands org-mode
-  :init (progn
-          (require 'org-crypt)
-          (setq org-fontify-quote-and-verse-blocks t
-                org-src-fontify-natively t
-                org-tags-exclude-from-inheritance (quote ("crypt"))
-                org-crypt-key "alvin.francis.dumalus@gmail.com"
-                org-hide-emphasis-markers t
-                org-adapt-indentation nil)
-          (set-face-attribute 'org-block-background nil
-                              :background "#070707")
-          (set-face-attribute 'org-block-begin-line nil
-                              :background "#002D43")
-          (set-face-attribute 'org-block-end-line nil
-                              :background "#002D43")
-          (evil-define-key 'normal org-mode-map
-            (kbd "> >") 'org-indent-item
-            (kbd "> t") 'org-indent-item-tree
-            (kbd "< <") 'org-outdent-item
-            (kbd "< t") 'org-outdent-item-tree)
-          ;; Org-Capture
-          (setq org-directory "~/Documents/org")
-          (setq org-default-notes-file (concat org-directory "/notes.org"))
-          (setq org-capture-templates
-                '(("n" "Notes" entry (file+headline (concat org-directory "/notes.org") "Notes")
-                   "* %U\n %i\n%?"))))
-  :bind (:map evil-normal-state-map
-              (", , c" . org-capture))
-  :bind (:map evil-visual-state-map
-              (", , c" . org-capture))
-  :config (progn
-            (org-babel-do-load-languages
-             'org-babel-load-languages
-             '((emacs-lisp . t)
-               (sql . t)))
-            (org-crypt-use-before-save-magic)))
-
-(req-package org-journal
-  :require org
-  :commands org-journal-mode
-  :init (progn
-          (setq org-journal-file-format "%Y-%m-%d.org")
-          (add-hook 'org-journal-mode-hook 'auto-fill-mode)))
-
 (defun transparency (value)
   "Sets the transparency of the frame window. 0=transparent/100=opaque"
   (interactive "nTransparency Value 0 - 100 opaque:")
   (set-frame-parameter (selected-frame) 'alpha value))
+
+(defun beautify-json ()
+  (interactive)
+  (let ((b (if mark-active (min (point) (mark)) (point-min)))
+        (e (if mark-active (max (point) (mark)) (point-max))))
+    (shell-command-on-region b e
+     "python -mjson.tool" (current-buffer) t)))
 
 (defadvice load-theme (before theme-dont-propagate activate)
   (mapc #'disable-theme custom-enabled-themes))
@@ -154,275 +112,6 @@
 (defadvice load-theme (after hide-vertical-border activate)
   (set-face-attribute 'vertical-border nil :foreground
                       (face-attribute 'default :background)))
-
-(req-package linum
-  :init (progn
-          (setq linum-format " %d ")
-          (add-hook 'prog-mode-hook 'linum-mode)))
-
-(req-package paren
-  :defer 60
-  :config (show-paren-mode t))
-
-(req-package git-gutter+
-  :config (global-git-gutter+-mode t))
-
-(req-package evil-surround
-  :require evil
-  :config (progn
-            (evil-define-key 'visual evil-surround-mode-map
-              "s" nil
-              "S" 'evil-surround-region)
-            (global-evil-surround-mode)))
-
-(req-package elscreen
-  :require evil
-  :init (progn
-          (setq elscreen-tab-display-control nil
-                elscreen-display-screen-number nil
-                elscreen-tab-display-kill-screen nil)
-
-          (defun evil-elscreen-quit ()
-            (interactive)
-            (if (and (not (elscreen-one-screen-p))
-                     (one-window-p))
-                (elscreen-kill)
-              (evil-quit)))
-
-          (evil-ex-define-cmd "quit" #'evil-elscreen-quit)
-
-          (bind-keys
-           :map evil-normal-state-map
-           (", n n" . elscreen-create)
-           (", t c" . elscreen-kill)
-           (", t T" . elscreen-toggle-display-tab)
-           ("H" . elscreen-previous)
-           ("L" . elscreen-next)))
-  :config (progn
-            (elscreen-toggle-display-screen-number)
-            (elscreen-start)))
-
-(req-package rainbow-delimiters
-  :init (progn
-          (setq rainbow-delimiters-max-face-count 1)
-          (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-  :commands rainbow-delimiters-mode
-  :config (progn
-            (set-face-attribute 'rainbow-delimiters-unmatched-face nil
-                                :foreground 'unspecified
-                                :inherit 'error)))
-
-(req-package powerline
-  :require evil
-  :init (setf powerline-default-separator nil)
-  :config (progn
-            (defadvice load-theme (after reset-powerline activate)
-              (powerline-reset))
-            (powerline-center-evil-theme)))
-
-(req-package paredit
-  :require evil
-  :init (progn
-          (dolist (hook '(emacs-lisp-mode-hook
-                          cider-repl-mode-hook
-                          eval-expression-minibuffer-setup-hook
-                          clojure-mode-hook
-                          lisp-mode-hook
-                          lisp-interaction-mode-hook
-                          scheme-mode-hook))
-            (add-hook hook 'enable-paredit-mode))
-          (evil-define-key 'normal paredit-mode-map
-            (kbd "< h") 'paredit-backward-slurp-sexp
-            (kbd "> l") 'paredit-forward-slurp-sexp
-            (kbd "> h") 'paredit-backward-barf-sexp
-            (kbd "< l") 'paredit-forward-barf-sexp
-            ;; NOTE: Inteferes with d-prefix keys
-            ;; (kbd "d s f") 'paredit-splice-sexp
-            (kbd "W") 'paredit-forward
-            (kbd "B") 'paredit-backward)))
-
-(req-package slime
-  :require (evil paredit)
-  :init (progn
-          (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
-          (evil-define-key 'normal slime-mode-map
-            (kbd ", x e") 'slime-eval-last-expression
-            (kbd ", x x") 'slime-eval-defun
-            (kbd ", x p") 'slime-pprint-eval-last-expression))
-  :commands slime
-  :config (slime-setup '(slime-fancy slime-asdf)))
-
-(req-package ido
-  :init (setq ido-enable-flex-matching t
-              ido-everywhere t)
-  :config (ido-mode 1))
-
-(req-package git-gutter-fringe+
-  :if (display-graphic-p))
-
-(req-package ensime
-  :require evil
-  :commands ensime
-  :init (evil-define-key 'normal ensime-mode-map
-          (kbd "C-]") 'ensime-edit-definition)
-  :config (progn
-            (defun setup-ensime ()
-              (defvar ensime-slick-prefix "^scala\\.slick\\.")
-
-              (defvar ensime-slickdoc-url-base
-                "http://slick.typesafe.com/doc/2.0.0-M3/api/index.html#"
-                "URL base for constructing slick links.")
-
-              (defun ensime-make-slick-doc-url-helper
-                  (url-base type &optional member)
-                "Given a scala type, and optionally a type member,
-   construct the corresponding slick url.  Currently does not
-   narrow down to member"
-                (concat url-base (ensime-type-full-name type)))
-
-              (defun ensime-make-slick-doc-url (type &optional member)
-                (ensime-make-slick-doc-url-helper
-                 ensime-slickdoc-url-base type member))
-              )
-            (add-hook 'ensime-connected-hook 'setup-ensime)))
-
-(req-package scala-mode
-  :commands scala-mode
-  :init (add-hook 'scala-mode-hook
-                  (lambda ()
-                    (setq imenu-generic-expression
-                          '(("var" "\\(var +\\)\\([^(): ]+\\)" 2)
-                            ("val" "\\(val +\\)\\([^(): ]+\\)" 2)
-                            ("override def" "^[ \\t]*\\(override\\) +\\(def +\\)\\([^(): ]+\\)" 3)
-                            ("implicit def" "^[ \\t]*\\(implicit\\) +\\(def +\\)\\([^(): ]+\\)" 3)
-                            ("def" "^[ \\t]*\\(def +\\)\\([^(): ]+\\)" 2)
-                            ("trait" "\\(trait +\\)\\([^(): ]+\\)" 2)
-                            ("class" "^[ \\t]*\\(class +\\)\\([^(): ]+\\)" 2)
-                            ("case class" "^[ \\t]*\\(case class +\\)\\([^(): ]+\\)" 2)
-                            ("object" "\\(object +\\)\\([^(): ]+\\)" 2))
-                          ))))
-
-(req-package trident-mode
-  :require (slime skewer-mode)
-  :mode ("\\.paren\\'" . lisp-mode)
-  :commands trident-mode
-  :init (progn
-          (add-hook 'lisp-mode-hook
-                    (lambda ()
-                      (when (and buffer-file-name
-                                 (string-match-p "\\.paren\\>" buffer-file-name))
-                        (unless (slime-connected-p)
-                          (save-excursion (slime)))
-                        (trident-mode +1))))
-          (add-hook 'trident-mode-hook
-                    (lambda () (trident-add-keys-with-prefix "C-c C-e")))))
-
-(req-package csharp-mode
-  :require electric
-  :commands csharp-mode
-  :config (progn
-            (electric-indent-mode t)
-            (add-hook 'csharp-mode-hook
-                      (lambda ()
-                        (electric-pair-mode)
-                        (setq electric-pair-pairs '((?\" . ?\")
-                                                    (?\{ . ?\})
-                                                    (?\< . ?\>)))))))
-
-(req-package vimrc-mode
-  :commands vimrc-mode
-  :mode (".vim\\(rc\\)?$" . vimrc-mode))
-
-(req-package js2-mode
-  :commands js2-mode)
-
-(req-package jsx-mode
-  :init (setf jsx-indent-level 2)
-  :commands jsx-mode
-  :mode ("\\.jsx\\'" . jsx-mode))
-
-(req-package web-mode
-  :require evil
-  :commands web-mode
-  :init (progn
-          (setq web-mode-code-indent-offset 2)
-          (evil-define-key 'operator web-mode-map
-            (kbd "g c") 'web-mode-comment-or-uncomment)))
-
-(req-package cider
-  :require evil
-  :commands cider-mode
-  :init (progn
-          (setq cider-repl-display-help-banner nil)
-          (evil-define-key 'normal cider-mode-map
-            (kbd ", x p") 'cider-eval-print-last-sexp
-            (kbd ", x e") 'cider-eval-last-sexp
-            (kbd ", x x") 'cider-eval-defun-at-point
-            (kbd "C-]") 'cider-jump-to-var)
-          (evil-define-key 'visual cider-mode-map
-            (kbd ", x r") 'cider-eval-region)
-          (evil-define-key 'normal cider-popup-buffer-mode-map
-            "q" 'cider-popup-buffer-quit-function)
-          (evil-define-key 'normal cider-stacktrace-mode-map
-            "q" 'cider-popup-buffer-quit-function)
-          (evil-define-key 'normal cider-docview-mode-map
-            "q" 'cider-popup-buffer-quit-function)
-          (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)))
-
-(req-package ac-cider
-  :require (cider auto-complete)
-  :bind (:map cider-mode-map
-              ("C-c C-d" . ac-cider-popup-doc)))
-
-(req-package clojure-mode
-  :require (evil)
-  :commands clojure-mode
-  :config (progn
-            (define-clojure-indent
-              (defroutes 'defun)
-              (GET 2)
-              (POST 2)
-              (PUT 2)
-              (DELETE 2)
-              (HEAD 2)
-              (ANY 2)
-              (context 2)
-              (match 1))
-            (put-clojure-indent 'reify '(:defn (1)))
-            (put-clojure-indent 'defprotocol '(:defn (1)))
-            (put-clojure-indent 'this-as '(:defn (1)))
-            (evil-define-key 'normal clojure-mode-map
-              (kbd "C-c C-e") 'lisp-eval-last-sexp
-              (kbd "C-c C-c") 'lisp-eval-defun)
-            (evil-define-key 'visual clojure-mode-map
-              (kbd "C-c C-r") 'lisp-eval-region)))
-
-(req-package inf-clojure
-  :commands inf-clojure)
-
-(req-package clojure-cheatsheet
-  :commands clojure-cheatsheet)
-
-(req-package sql
-  :init (progn
-          (setq sql-product 'postgres
-                sql-server "localhost")
-          (add-hook 'sql-interactive-mode-hook
-                    (lambda ()
-                      (unbind-key ";" sql-interactive-mode-map))))
-  :config (defun sql-send-paragraph ()
-            "Send the current paragraph to the SQL process."
-            (interactive)
-            (let ((start (save-excursion
-                           (backward-paragraph)
-                           (point)))
-                  (end (save-excursion
-                         (forward-paragraph)
-                         (point))))
-              (sql-send-string
-               (mapconcat #'identity
-                          (split-string (buffer-substring start end) "\n")
-                          " ")))))
 
 (add-hook 'lisp-mode-hook
           (lambda ()
@@ -437,20 +126,89 @@
   (help-prefix (kbd "C-l") 'find-library)
   (help-prefix (kbd "C-v") 'find-variable))
 
-(req-package sgml-mode
-  :commands html-mode
-  :init (cl-labels ((local-vars ()
-                                (setq-local tab-width 2)))
-          (add-hook 'html-mode-hook #'local-vars)))
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(req-package yaml-mode
-  :commands yaml-mode)
+;; --------------
 
-(req-package eldoc
+(use-package linum
+  :init (progn
+          (setq linum-format " %d ")
+          (add-hook 'prog-mode-hook 'linum-mode)))
+
+(use-package linum-relative
+  :commands (linum-relative-mode linum-relative-toggle)
+  :init (setq linum-relative-format " %3s "))
+
+(use-package paren
+  :defer 60
+  :config (show-paren-mode t))
+
+(use-package ido
+  :init (setq ido-enable-flex-matching t
+              ido-everywhere t)
+  :config (ido-mode 1))
+
+(use-package auto-complete
+  :bind (:map ac-complete-mode-map
+              ("C-n" . ac-next)
+              ("C-p" . ac-previous))
+  :demand t
+  :config (ac-config-default))
+
+(use-package recentf
+  :demand t
+  :init (progn
+          (setq
+           recentf-mode t
+           recentf-max-saved-items 500)))
+
+(use-package rainbow-delimiters
+  :init (progn
+          (setq rainbow-delimiters-max-face-count 1)
+          (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  :commands rainbow-delimiters-mode
+  :config (progn
+            (set-face-attribute 'rainbow-delimiters-unmatched-face nil
+                                :foreground 'unspecified
+                                :inherit 'error)))
+
+(use-package undo-tree
+  :init (progn
+          (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.undo")))
+          (setq undo-tree-auto-save-history t)))
+
+(use-package eldoc
+  :defer t
   :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
 
-(req-package evil
-  :require (key-chord ace-jump-mode flymake)
+(use-package adaptive-wrap
+  :init (setq-default adaptive-wrap-extra-indent 2)
+  :config (progn
+            (when (fboundp 'adaptive-wrap-prefix-mode)
+              (defun visual-line-adaptive-wrap-prefix-mode ()
+                (adaptive-wrap-prefix-mode visual-line-mode)))
+            ;; (add-hook
+            ;;  'visual-line-mode-hook
+            ;; 'visual-line-adaptive-wrap-prefix-mode)
+ ))
+
+(use-package git-gutter+
+  :defer 10
+  :if (not (display-graphic-p))
+  :config (global-git-gutter+-mode t))
+
+(use-package git-gutter-fringe+
+  :defer 10
+  :if (display-graphic-p)
+  :config (global-git-gutter+-mode t))
+
+(use-package key-chord
+  :init (setq key-chord-one-key-delay 1.0
+              key-chord-two-keys-delay 1.0)
+  :config (progn
+            (key-chord-mode t)))
+
+(use-package evil
   :demand t
   :init (setq evil-move-cursor-back nil
               evil-search-module 'evil-search
@@ -469,7 +227,6 @@
   :bind (:map evil-visual-state-map
               (";" . evil-ex))
   :bind (:map evil-motion-state-map
-              ("s-f" . evil-ace-jump-char-mode)
               ("C-u" . evil-scroll-up)
               ("-" . evil-jump-up)
               ("SPC" . evil-jump-down)
@@ -510,182 +267,29 @@
             (evil-mode t))
   )
 
-(req-package evil-visualstar
+(use-package ace-jump-mode
+  :bind (:map evil-motion-state-map
+              ("s-f" . evil-ace-jump-char-mode)))
+
+(use-package evil-surround
+  :config (progn
+            (evil-define-key 'visual evil-surround-mode-map
+              "s" nil
+              "S" 'evil-surround-region)
+            (global-evil-surround-mode)))
+
+(use-package evil-visualstar
   ;; Problems with using n and N to continue the search
-  :require evil
   :config (global-evil-visualstar-mode))
 
-(req-package evil-leader
-  :require evil)
+(use-package evil-leader)
 
-(req-package evil-indent-textobject
-  :require evil)
+(use-package evil-indent-textobject)
 
-(req-package evil-easymotion
-  :require evil
+(use-package evil-easymotion
   :config (evilem-default-keybindings "M-SPC"))
 
-(req-package magit
-  :require (evil hl-line)
-  :init (progn
-          (setq magit-last-seen-setup-instructions "1.4.0")
-          (evil-ex-define-cmd "Gstatus" #'magit-status)
-          (evil-ex-define-cmd "Gs" "Gstatus")
-          (add-hook 'magit-mode-hook
-                    (lambda ()
-                      (hl-line-mode))))
-  :bind ("<f10>" . magit-status))
-
-(req-package git-timemachine
-  :require evil
-  :commands git-timemachine-toggle
-  :init (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)
-  :config (evil-make-overriding-map git-timemachine-mode-map 'normal))
-
-(req-package undo-tree
-  :init (progn
-          (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.undo")))
-          (setq undo-tree-auto-save-history t)))
-
-(req-package hippie-exp
-  :require evil
-  :bind (:map evil-insert-state-map
-              ("M-TAB" . hippie-expand)))
-
-(req-package key-chord
-  :init (setq key-chord-one-key-delay 1.0
-              key-chord-two-keys-delay 1.0)
-  :config (progn
-            (key-chord-mode t)))
-
-(req-package adaptive-wrap
-  :init (setq-default adaptive-wrap-extra-indent 2)
-  :config (progn
-            (when (fboundp 'adaptive-wrap-prefix-mode)
-              (defun visual-line-adaptive-wrap-prefix-mode ()
-                (adaptive-wrap-prefix-mode visual-line-mode)))
-            ;; (add-hook
-            ;;  'visual-line-mode-hook
-            ;; 'visual-line-adaptive-wrap-prefix-mode)
- ))
-
-(req-package projectile)
-
-(req-package helm
-  :require evil
-  :config (progn
-            (defun helm-files-mru ()
-              (interactive)
-              (helm :sources '(helm-source-recentf
-                               helm-source-findutils
-                               helm-source-files-in-current-dir)
-                    :buffer "*helm-files-mru-buffers*"))
-            (bind-keys
-             ("M-x" . helm-M-x)
-             ("C-x C-f" . helm-find-files))
-            (bind-keys
-             :map evil-normal-state-map
-             (", ;" . helm-M-x)
-             ("C-p" . helm-files-mru)
-             ("\\ b" . helm-buffers-list)
-             ("\\ y" . helm-show-kill-ring)
-             ("\\ m" . helm-imenu)
-             ("\\ \\" . helm-resume))
-            (bind-key ", ;" 'helm-M-x evil-visual-state-map)
-            (helm-mode t)))
-
-(req-package helm-ls-git
-  :require (evil helm)
-  :bind (:map evil-normal-state-map
-              ("\\ f" . helm-browse-project)))
-
-(req-package helm-swoop
-  :require (evil helm)
-  :config (bind-key "\\ l" 'helm-swoop evil-normal-state-map))
-
-(req-package helm-descbinds
-  :require helm)
-
-(req-package auto-complete
-  :bind (:map ac-complete-mode-map
-              ("C-n" . ac-next)
-              ("C-p" . ac-previous))
-  :demand t
-  :config (ac-config-default))
-
-(req-package recentf
-  :demand t
-  :init (progn
-          (setq
-           recentf-mode t
-           recentf-max-saved-items 500)))
-
-(req-package lively
-  :commands lively)
-
-(req-package helm-ag)
-
-(req-package helm-projectile
-  :require (evil helm projectile helm-ag)
-  :config (bind-keys
-           :map evil-normal-state-map
-           ("\\ p p" . helm-projectile)
-           ("\\ p a" . helm-projectile-ag)))
-
-(req-package eval-sexp-fu
-  :defer 10)
-
-(req-package restclient
-  :commands restclient-mode)
-
-(req-package esup
-  :commands esup)
-
-(req-package package
-  :init (cl-labels ((package-menu-evil ()
-                                       (progn
-                                         (evil-normal-state)
-                                         (bind-keys
-                                          :map evil-normal-state-local-map
-                                          ("i" . package-menu-mark-install)
-                                          ("d" . package-menu-mark-delete)
-                                          ("U" . package-menu-mark-upgrades)
-                                          ("u" . package-menu-mark-unmark)
-                                          ("RET" . package-menu-describe-package)
-                                          ("q" . quit-window)
-                                          ("x" . package-menu-execute)))))
-          (add-hook 'package-menu-mode-hook #'package-menu-evil)))
-
-(defun beautify-json ()
-  (interactive)
-  (let ((b (if mark-active (min (point) (mark)) (point-min)))
-        (e (if mark-active (max (point) (mark)) (point-max))))
-    (shell-command-on-region b e
-     "python -mjson.tool" (current-buffer) t)))
-
-(req-package which-func
-  :bind ("C-x 4 n" . clone-buffer-and-narrow-to-function)
-  :commands which-function
-  :init (defun clone-buffer-and-narrow-to-function ()
-          (interactive)
-          (clone-indirect-buffer-other-window (which-function) 'pop-to-buffer)
-          (mark-defun) ; works not only in emacs-lisp, but C++, Python, ...
-          (narrow-to-region (mark) (point))
-          (pop-mark)
-          (other-window 1)))
-
-(req-package multiple-cursors
-  :require evil
-  :disabled t
-  :init (progn
-          (global-set-key (kbd "s-<up>") 'mc/mark-previous-like-this)
-          (global-set-key (kbd "s-<down>") 'mc/mark-next-like-this)
-          (bind-keys :map evil-visual-state-map
-                     ("C-n" . mc/mark-next-like-this)
-                     ("C-p" . mc/mark-previous-like-this))))
-
-(req-package evil-multiedit
-  :require (evil iedit key-chord)
+(use-package evil-multiedit
   :demand t
   :bind (:map evil-normal-state-map
               ("C-;" . evil-multiedit-match-all)
@@ -701,36 +305,313 @@
               ("g p" . evil-multiedit-prev))
   :config (key-chord-define evil-multiedit-insert-state-map "jj" 'evil-multiedit-state))
 
-(req-package linum-relative
-  :commands (linum-relative-mode linum-relative-toggle)
-  :init (setq linum-relative-format " %3s "))
+(use-package hippie-exp
+  :bind (:map evil-insert-state-map
+              ("M-TAB" . hippie-expand)))
 
-(req-package highlight
-  :require evil
+(use-package elscreen
+  :init (progn
+          (setq elscreen-tab-display-control nil
+                elscreen-display-screen-number nil
+                elscreen-tab-display-kill-screen nil)
+
+          (defun evil-elscreen-quit ()
+            (interactive)
+            (if (and (not (elscreen-one-screen-p))
+                     (one-window-p))
+                (elscreen-kill)
+              (evil-quit)))
+
+          (evil-ex-define-cmd "quit" #'evil-elscreen-quit)
+
+          (bind-keys
+           :map evil-normal-state-map
+           (", n n" . elscreen-create)
+           (", t c" . elscreen-kill)
+           (", t T" . elscreen-toggle-display-tab)
+           ("H" . elscreen-previous)
+           ("L" . elscreen-next)))
+  :config (progn
+            (elscreen-toggle-display-screen-number)
+            (elscreen-start)))
+
+(use-package powerline
+  :init (setf powerline-default-separator nil)
+  :config (progn
+            (defadvice load-theme (after reset-powerline activate)
+              (powerline-reset))
+            (powerline-center-evil-theme)))
+
+(use-package multiple-cursors
+  :disabled t
+  :init (progn
+          (global-set-key (kbd "s-<up>") 'mc/mark-previous-like-this)
+          (global-set-key (kbd "s-<down>") 'mc/mark-next-like-this)
+          (bind-keys :map evil-visual-state-map
+                     ("C-n" . mc/mark-next-like-this)
+                     ("C-p" . mc/mark-previous-like-this))))
+
+(use-package highlight
   :bind (:map evil-normal-state-map
               (", h h" . hlt-highlight-symbol)
               (", h x" . hlt-unhighlight-symbol)))
 
-(req-package exec-path-from-shell
-  :config (exec-path-from-shell-initialize))
+(use-package org
+  :init (progn
+          (setq org-fontify-quote-and-verse-blocks t
+                org-src-fontify-natively t
+                org-tags-exclude-from-inheritance (quote ("crypt"))
+                org-crypt-key "alvin.francis.dumalus@gmail.com"
+                org-hide-emphasis-markers t
+                org-adapt-indentation nil)
+          (evil-define-key 'normal org-mode-map
+            (kbd "> >") 'org-indent-item
+            (kbd "> t") 'org-indent-item-tree
+            (kbd "< <") 'org-outdent-item
+            (kbd "< t") 'org-outdent-item-tree)
+          ;; Org-Capture
+          (setq org-directory "~/Documents/org")
+          (setq org-default-notes-file (concat org-directory "/notes.org"))
+          (setq org-capture-templates
+                '(("n" "Notes" entry (file+headline (concat org-directory "/notes.org") "Notes")
+                   "* %U\n %i\n%?"))))
+  :bind (:map evil-normal-state-map
+              (", , c" . org-capture))
+  :bind (:map evil-visual-state-map
+              (", , c" . org-capture))
+  :config (progn
+            (set-face-attribute 'org-block-background nil
+                                :background "#070707")
+            (set-face-attribute 'org-block-begin-line nil
+                                :background "#002D43")
+            (set-face-attribute 'org-block-end-line nil
+                                :background "#002D43")
+            (org-babel-do-load-languages
+             'org-babel-load-languages
+             '((emacs-lisp . t)
+               (sql . t)))
+            (require 'org-crypt)
+            (org-crypt-use-before-save-magic)))
 
-(req-package ssh
-  :init (add-hook 'ssh-mode-hook
+(use-package org-journal
+  :defer t
+  :init (progn
+          (setq org-journal-file-format "%Y-%m-%d.org")
+          (add-hook 'org-journal-mode-hook 'auto-fill-mode)))
+
+(use-package paredit
+  :init (progn
+          (dolist (hook '(emacs-lisp-mode-hook
+                          cider-repl-mode-hook
+                          eval-expression-minibuffer-setup-hook
+                          clojure-mode-hook
+                          lisp-mode-hook
+                          lisp-interaction-mode-hook
+                          scheme-mode-hook))
+            (add-hook hook 'enable-paredit-mode))
+          (evil-define-key 'normal paredit-mode-map
+            (kbd "< h") 'paredit-backward-slurp-sexp
+            (kbd "> l") 'paredit-forward-slurp-sexp
+            (kbd "> h") 'paredit-backward-barf-sexp
+            (kbd "< l") 'paredit-forward-barf-sexp
+            ;; NOTE: Inteferes with d-prefix keys
+            ;; (kbd "d s f") 'paredit-splice-sexp
+            (kbd "W") 'paredit-forward
+            (kbd "B") 'paredit-backward)))
+
+(use-package slime
+  :init (progn
+          (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
+          (evil-define-key 'normal slime-mode-map
+            (kbd ", x e") 'slime-eval-last-expression
+            (kbd ", x x") 'slime-eval-defun
+            (kbd ", x p") 'slime-pprint-eval-last-expression))
+  :commands slime
+  :config (slime-setup '(slime-fancy slime-asdf)))
+
+(use-package trident-mode
+  :mode ("\\.paren\\'" . lisp-mode)
+  :commands trident-mode
+  :init (progn
+          (add-hook 'lisp-mode-hook
+                    (lambda ()
+                      (when (and buffer-file-name
+                                 (string-match-p "\\.paren\\>" buffer-file-name))
+                        (unless (slime-connected-p)
+                          (save-excursion (slime)))
+                        (trident-mode +1))))
+          (add-hook 'trident-mode-hook
+                    (lambda () (trident-add-keys-with-prefix "C-c C-e")))))
+
+(use-package clojure-mode
+  :commands clojure-mode
+  :config (progn
+            (define-clojure-indent
+              (defroutes 'defun)
+              (GET 2)
+              (POST 2)
+              (PUT 2)
+              (DELETE 2)
+              (HEAD 2)
+              (ANY 2)
+              (context 2)
+              (match 1))
+            (put-clojure-indent 'reify '(:defn (1)))
+            (put-clojure-indent 'defprotocol '(:defn (1)))
+            (put-clojure-indent 'this-as '(:defn (1)))
+            (evil-define-key 'normal clojure-mode-map
+              (kbd "C-c C-e") 'lisp-eval-last-sexp
+              (kbd "C-c C-c") 'lisp-eval-defun)
+            (evil-define-key 'visual clojure-mode-map
+              (kbd "C-c C-r") 'lisp-eval-region)))
+
+(use-package cider
+  :commands cider-mode
+  :init (progn
+          (setq cider-repl-display-help-banner nil)
+          (evil-define-key 'normal cider-mode-map
+            (kbd ", x p") 'cider-eval-print-last-sexp
+            (kbd ", x e") 'cider-eval-last-sexp
+            (kbd ", x x") 'cider-eval-defun-at-point
+            (kbd "C-]") 'cider-jump-to-var)
+          (evil-define-key 'visual cider-mode-map
+            (kbd ", x r") 'cider-eval-region)
+          (evil-define-key 'normal cider-popup-buffer-mode-map
+            "q" 'cider-popup-buffer-quit-function)
+          (evil-define-key 'normal cider-stacktrace-mode-map
+            "q" 'cider-popup-buffer-quit-function)
+          (evil-define-key 'normal cider-docview-mode-map
+            "q" 'cider-popup-buffer-quit-function)
+          (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)))
+
+(use-package ac-cider
+  :bind (:map cider-mode-map
+              ("C-c C-d" . ac-cider-popup-doc)))
+
+(use-package inf-clojure
+  :commands inf-clojure)
+
+(use-package clojure-cheatsheet
+  :commands clojure-cheatsheet)
+
+(use-package scala-mode
+  :commands scala-mode
+  :init (add-hook 'scala-mode-hook
                   (lambda ()
-                    (setq ssh-directory-tracking-mode t)
-                    (shell-dirtrack-mode t)
-                    (setq dirtrackp nil))))
+                    (setq imenu-generic-expression
+                          '(("var" "\\(var +\\)\\([^(): ]+\\)" 2)
+                            ("val" "\\(val +\\)\\([^(): ]+\\)" 2)
+                            ("override def" "^[ \\t]*\\(override\\) +\\(def +\\)\\([^(): ]+\\)" 3)
+                            ("implicit def" "^[ \\t]*\\(implicit\\) +\\(def +\\)\\([^(): ]+\\)" 3)
+                            ("def" "^[ \\t]*\\(def +\\)\\([^(): ]+\\)" 2)
+                            ("trait" "\\(trait +\\)\\([^(): ]+\\)" 2)
+                            ("class" "^[ \\t]*\\(class +\\)\\([^(): ]+\\)" 2)
+                            ("case class" "^[ \\t]*\\(case class +\\)\\([^(): ]+\\)" 2)
+                            ("object" "\\(object +\\)\\([^(): ]+\\)" 2))
+                          ))))
 
-(req-package tramp
-  :init (setq tramp-default-method "ssh"))
+(use-package ensime
+  :commands ensime
+  :init (evil-define-key 'normal ensime-mode-map
+          (kbd "C-]") 'ensime-edit-definition)
+  :config (progn
+            (defun setup-ensime ()
+              (defvar ensime-slick-prefix "^scala\\.slick\\.")
 
-(req-package browse-url
-  :require eww
-  :init (setq browse-url-function #'eww-browse-url))
+              (defvar ensime-slickdoc-url-base
+                "http://slick.typesafe.com/doc/2.0.0-M3/api/index.html#"
+                "URL base for constructing slick links.")
 
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+              (defun ensime-make-slick-doc-url-helper
+                  (url-base type &optional member)
+                "Given a scala type, and optionally a type member,
+   construct the corresponding slick url.  Currently does not
+   narrow down to member"
+                (concat url-base (ensime-type-full-name type)))
 
-(req-package smerge-mode
+              (defun ensime-make-slick-doc-url (type &optional member)
+                (ensime-make-slick-doc-url-helper
+                 ensime-slickdoc-url-base type member))
+              )
+            (add-hook 'ensime-connected-hook 'setup-ensime)))
+
+(use-package web-mode
+  :commands web-mode
+  :init (progn
+          (setq web-mode-code-indent-offset 2)
+          (evil-define-key 'operator web-mode-map
+            (kbd "g c") 'web-mode-comment-or-uncomment)))
+
+(use-package csharp-mode
+  :commands csharp-mode
+  :config (progn
+            (electric-indent-mode t)
+            (add-hook 'csharp-mode-hook
+                      (lambda ()
+                        (electric-pair-mode)
+                        (setq electric-pair-pairs '((?\" . ?\")
+                                                    (?\{ . ?\})
+                                                    (?\< . ?\>)))))))
+
+(use-package vimrc-mode
+  :commands vimrc-mode
+  :mode (".vim\\(rc\\)?$" . vimrc-mode))
+
+(use-package js2-mode
+  :commands js2-mode)
+
+(use-package jsx-mode
+  :init (setf jsx-indent-level 2)
+  :commands jsx-mode
+  :mode ("\\.jsx\\'" . jsx-mode))
+
+(use-package sql
+  :defer t
+  :init (progn
+          (setq sql-product 'postgres
+                sql-server "localhost")
+          (add-hook 'sql-interactive-mode-hook
+                    (lambda ()
+                      (unbind-key ";" sql-interactive-mode-map))))
+  :config (defun sql-send-paragraph ()
+            "Send the current paragraph to the SQL process."
+            (interactive)
+            (let ((start (save-excursion
+                           (backward-paragraph)
+                           (point)))
+                  (end (save-excursion
+                         (forward-paragraph)
+                         (point))))
+              (sql-send-string
+               (mapconcat #'identity
+                          (split-string (buffer-substring start end) "\n")
+                          " ")))))
+
+(use-package sgml-mode
+  :commands html-mode
+  :init (cl-labels ((local-vars ()
+                                (setq-local tab-width 2)))
+          (add-hook 'html-mode-hook #'local-vars)))
+
+(use-package yaml-mode
+  :commands yaml-mode)
+
+(use-package magit
+  :init (progn
+          (setq magit-last-seen-setup-instructions "1.4.0")
+          (evil-ex-define-cmd "Gstatus" #'magit-status)
+          (evil-ex-define-cmd "Gs" "Gstatus")
+          (add-hook 'magit-mode-hook
+                    (lambda ()
+                      (hl-line-mode))))
+  :bind ("<f10>" . magit-status))
+
+(use-package git-timemachine
+  :commands git-timemachine-toggle
+  :init (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)
+  :config (evil-make-overriding-map git-timemachine-mode-map 'normal))
+
+(use-package smerge-mode
   :commands smerge-mode
   :init (progn
           (defun sm-try-smerge ()
@@ -740,9 +621,113 @@
                 (smerge-mode 1))))
           (add-hook 'find-file-hook 'sm-try-smerge t)))
 
-(req-package alert
+(use-package projectile
+  :defer t)
+
+(use-package helm
+  :bind (("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         :map evil-visual-state-map
+         (", ;" . helm-M-x)
+         :map evil-normal-state-map
+         (", ;" . helm-M-x)
+         ("C-p" . helm-files-mru)
+         ("\\ b" . helm-buffers-list)
+         ("\\ y" . helm-show-kill-ring)
+         ("\\ m" . helm-imenu)
+         ("\\ \\" . helm-resume))
+  :config (progn
+            (defun helm-files-mru ()
+              (interactive)
+              (helm :sources '(helm-source-recentf
+                               helm-source-findutils
+                               helm-source-files-in-current-dir)
+                    :buffer "*helm-files-mru-buffers*"))
+            (helm-mode t)))
+
+(use-package helm-ls-git
+  :defer t
+  :bind (:map evil-normal-state-map
+              ("\\ f" . helm-browse-project)))
+
+(use-package helm-swoop
+  :defer t
+  :bind (:map evil-normal-state-map
+              ("\\ l" . helm-swoop)))
+
+(use-package helm-descbinds
+  :defer t)
+
+(use-package helm-ag
+  :defer t)
+
+(use-package helm-projectile
+  :defer t
+  :bind (:map evil-normal-state-map
+              ("\\ p p" . helm-projectile)
+              ("\\ p a" . helm-projectile-ag)))
+
+(use-package restclient
+  :commands restclient-mode)
+
+(use-package package
+  :init (cl-labels ((package-menu-evil ()
+                                       (progn
+                                         (evil-normal-state)
+                                         (bind-keys
+                                          :map evil-normal-state-local-map
+                                          ("i" . package-menu-mark-install)
+                                          ("d" . package-menu-mark-delete)
+                                          ("U" . package-menu-mark-upgrades)
+                                          ("u" . package-menu-mark-unmark)
+                                          ("RET" . package-menu-describe-package)
+                                          ("q" . quit-window)
+                                          ("x" . package-menu-execute)))))
+          (add-hook 'package-menu-mode-hook #'package-menu-evil)))
+
+(use-package which-func
+  :bind ("C-x 4 n" . clone-buffer-and-narrow-to-function)
+  :commands which-function
+  :init (defun clone-buffer-and-narrow-to-function ()
+          (interactive)
+          (clone-indirect-buffer-other-window (which-function) 'pop-to-buffer)
+          (mark-defun) ; works not only in emacs-lisp, but C++, Python, ...
+          (narrow-to-region (mark) (point))
+          (pop-mark)
+          (other-window 1)))
+
+(use-package exec-path-from-shell
+  :defer 10
+  :config (exec-path-from-shell-initialize))
+
+(use-package ssh
+  :commands (ssh)
+  :init (add-hook 'ssh-mode-hook
+                  (lambda ()
+                    (setq ssh-directory-tracking-mode t)
+                    (shell-dirtrack-mode t)
+                    (setq dirtrackp nil))))
+
+(use-package tramp
+  :defer t
+  :functions (tramp-read-passwd)
+  :init (setq tramp-default-method "ssh"))
+
+(use-package eww
+  :defer t)
+
+(use-package browse-url
+  :init (setq browse-url-function #'eww-browse-url))
+
+(use-package alert
+  :defer t
   :init (setq alert-default-style 'notifier))
 
-(req-package-finish)
+(use-package lively
+  :commands lively)
+
+(use-package esup
+  :commands esup)
+
 (load custom-file)
 (load-theme 'atom-one-dark)
