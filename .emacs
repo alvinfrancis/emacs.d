@@ -1,3 +1,11 @@
+;;;; gc init threshold
+(setq gc-cons-threshold most-positive-fixnum)
+(run-with-idle-timer
+ 5 nil
+ (lambda ()
+   (setq gc-cons-threshold 800000)
+   (message "gc-cons-threshold set to %s" gc-cons-threshold)))
+
 ;;;; package
 (require 'package)
 
