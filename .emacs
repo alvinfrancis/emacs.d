@@ -409,6 +409,7 @@
           (add-hook 'org-journal-mode-hook 'auto-fill-mode)))
 
 (use-package paredit
+  :defer t
   :init (progn
           (dolist (hook '(emacs-lisp-mode-hook
                           cider-repl-mode-hook
