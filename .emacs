@@ -272,13 +272,13 @@
             (unbind-key (kbd "C-n") evil-insert-state-map)
             (unbind-key (kbd "C-p") evil-insert-state-map)
 
-            (add-hook 'ace-jump-mode-end-hook 'exit-recursive-edit)
             (evil-mode t))
   )
 
 (use-package ace-jump-mode
   :bind (:map evil-motion-state-map
-              ("s-f" . evil-ace-jump-char-mode)))
+              ("s-f" . evil-ace-jump-char-mode))
+  :config (add-hook 'ace-jump-mode-end-hook 'exit-recursive-edit))
 
 (use-package evil-surround
   :config (progn
