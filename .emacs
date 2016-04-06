@@ -737,6 +737,12 @@
 (use-package esup
   :commands esup)
 
+(use-package rainbow-mode
+  :defer t)
+
+(use-package ranger
+  :defer t)
+
 (load custom-file)
 (use-package seti-theme
   :config (load-theme 'seti))
