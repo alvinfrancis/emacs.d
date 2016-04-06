@@ -402,6 +402,10 @@
           (setq org-journal-file-format "%Y-%m-%d.org")
           (add-hook 'org-journal-mode-hook 'auto-fill-mode)))
 
+(use-package org-page
+  :defer t
+  :init (setq op/repository-directory "~/Github/alvinfrancis.github.io"))
+
 (use-package paredit
   :defer t
   :init (progn
