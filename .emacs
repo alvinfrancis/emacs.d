@@ -389,12 +389,6 @@
   :bind (:map evil-visual-state-map
               (", , c" . org-capture))
   :config (progn
-            (set-face-attribute 'org-block-background nil
-                                :background "#070707")
-            (set-face-attribute 'org-block-begin-line nil
-                                :background "#002D43")
-            (set-face-attribute 'org-block-end-line nil
-                                :background "#002D43")
             (org-babel-do-load-languages
              'org-babel-load-languages
              '((emacs-lisp . t)
