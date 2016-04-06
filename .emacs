@@ -211,8 +211,8 @@
   :config (global-git-gutter+-mode t))
 
 (use-package key-chord
-  :init (setq key-chord-one-key-delay 1.0
-              key-chord-two-keys-delay 1.0)
+  :init (setq key-chord-one-key-delay 0.5
+              key-chord-two-keys-delay 0.5)
   :config (progn
             (key-chord-mode t)))
 
