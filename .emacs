@@ -181,6 +181,7 @@
                                 :inherit 'error)))
 
 (use-package undo-tree
+  :defer t
   :init (progn
           (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.undo")))
           (setq undo-tree-auto-save-history t)))
