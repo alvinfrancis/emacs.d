@@ -16,12 +16,11 @@
                     ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
-;; use-package should ideally be loaded by something other than package
-;; (package-refresh-contents)
-(mapc (lambda (p)
-        (unless (package-installed-p p)
-          (package-install p)))
-      '(use-package))
+;; Bootstrap use-package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
 (setq use-package-always-ensure t)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
