@@ -739,4 +739,5 @@
   :commands esup)
 
 (load custom-file)
-(load-theme 'atom-one-dark)
+(use-package seti-theme
+  :config (load-theme 'seti))
