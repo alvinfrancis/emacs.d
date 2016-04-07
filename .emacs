@@ -742,6 +742,13 @@
 (use-package ranger
   :defer t)
 
+(use-package flycheck
+  :defer t)
+
+(use-package flycheck-package
+  :defer t
+  :config (flycheck-package-setup))
+
 (load custom-file)
 (use-package seti-theme
   :config (load-theme 'seti))
