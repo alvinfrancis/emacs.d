@@ -101,6 +101,14 @@
  word-wrap t                  ; but turn on word wrap if line wrapping
  )
 
+;; In OSX by default, Braille Unicode falls back to the Apple Braille
+;; font.  Apple Braille is bugged, so we fall back to Apple Symbols
+;; instead.
+(when (featurep 'mac)
+  (set-fontset-font "fontset-default"
+                    '(#x2800 . #x28ff)
+                    "Apple Symbols"))
+
 (defun transparency (value)
   "Sets the transparency of the frame window. 0=transparent/100=opaque"
   (interactive "nTransparency Value 0 - 100 opaque:")
