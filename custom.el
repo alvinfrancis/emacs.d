@@ -13,7 +13,10 @@
  '(powerline-active1 ((t (:inherit default :background nil))))
  '(powerline-active2 ((t (:inherit default :background nil))))
  '(powerline-inactive1 ((t (:inherit default :background nil))))
- '(powerline-inactive2 ((t (:inherit default :background nil)))))
+ '(powerline-inactive2 ((t (:inherit default :background nil))))
+ '(org-block-background ((t (:background "#070707"))))
+ '(org-block-begin-line ((t (:background "#002D43"))))
+ '(org-block-end-line ((t (:background "#002D43")))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
