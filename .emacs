@@ -3,8 +3,7 @@
 (run-with-idle-timer
  5 nil
  (lambda ()
-   (setq gc-cons-threshold 800000)
-   (message "gc-cons-threshold set to %s" gc-cons-threshold)))
+   (setq gc-cons-threshold 800000)))
 
 ;;;; package
 (require 'package)
