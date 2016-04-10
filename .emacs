@@ -297,8 +297,6 @@
   ;; Problems with using n and N to continue the search
   :config (global-evil-visualstar-mode))
 
-(use-package evil-leader)
-
 (use-package evil-indent-textobject)
 
 (use-package evil-easymotion
