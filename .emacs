@@ -323,6 +323,7 @@
               ("M-TAB" . hippie-expand)))
 
 (use-package elscreen
+  :demand t
   :init (progn
           (setq elscreen-tab-display-control nil
                 elscreen-display-screen-number nil
@@ -335,15 +336,13 @@
                 (elscreen-kill)
               (evil-quit)))
 
-          (evil-ex-define-cmd "quit" #'evil-elscreen-quit)
-
-          (bind-keys
-           :map evil-normal-state-map
-           (", n n" . elscreen-create)
-           (", t c" . elscreen-kill)
-           (", t T" . elscreen-toggle-display-tab)
-           ("H" . elscreen-previous)
-           ("L" . elscreen-next)))
+          (evil-ex-define-cmd "quit" #'evil-elscreen-quit))
+  :bind (:map evil-normal-state-map
+              (", n n" . elscreen-create)
+              (", t c" . elscreen-kill)
+              (", t T" . elscreen-toggle-display-tab)
+              ("H" . elscreen-previous)
+              ("L" . elscreen-next))
   :config (progn
             (elscreen-toggle-display-screen-number)
             (elscreen-start)))
