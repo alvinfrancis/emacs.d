@@ -50,7 +50,6 @@
  '(js2-basic-offset 2)
  '(linum-format " %d ")
  '(linum-relative-current-symbol "")
- '(org-hide-emphasis-markers t)
  '(powerline-color1 "#3d3d68")
  '(powerline-color2 "#292945")
  '(powerline-height 10)
@@ -58,7 +57,6 @@
  '(sml/active-foreground-color "#ecf0f1")
  '(sml/inactive-background-color "#dfe4ea")
  '(sml/inactive-foreground-color "#34495e")
- '(sql-server "localhost")
  '(syslog-debug-face
    (quote
     ((t :background unspecified :foreground "#A1EFE4" :weight bold))))
