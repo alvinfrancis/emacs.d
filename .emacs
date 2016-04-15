@@ -303,8 +303,25 @@
 
 (use-package evil-indent-textobject)
 
+(use-package avy)
+
 (use-package evil-easymotion
-  :config (evilem-default-keybindings "M-SPC"))
+  :init (setq evilem-keys (list ?a ?b ?c ?d ?e ?f ?g ?h ?i ?j ?k ?l ?m
+                                ?n ?o ?p ?q ?r ?s ?t ?u ?v ?w ?x ?y ?z
+                                ?A ?B ?C ?D ?E ?F ?G ?H ?I ?J ?K ?L ?M
+                                ?N ?O ?P ?Q ?R ?S ?T ?U ?V ?W ?X ?Y ?Z))
+  :config (progn
+            (let ((prefix "M-SPC"))
+              (evilem-default-keybindings prefix)
+              ;; Override built-ins
+              (evilem-define (kbd (concat prefix " w")) #'evil-forward-word-begin)
+              (evilem-define (kbd (concat prefix " W")) #'evil-forward-WORD-begin)
+              (evilem-define (kbd (concat prefix " e")) #'evil-forward-word-end)
+              (evilem-define (kbd (concat prefix " E")) #'evil-forward-WORD-end)
+              (evilem-define (kbd (concat prefix " b")) #'evil-backward-word-begin)
+              (evilem-define (kbd (concat prefix " B")) #'evil-backward-WORD-begin)
+              (evilem-define (kbd (concat prefix " ge")) #'evil-backward-word-end)
+              (evilem-define (kbd (concat prefix " gE")) #'evil-backward-WORD-end))))
 
 (use-package evil-multiedit
   :demand t
