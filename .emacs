@@ -142,6 +142,10 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; Enabled disabled commands
+
+(put 'narrow-to-region 'disabled nil)
+
 ;; --------------
 
 (use-package linum
