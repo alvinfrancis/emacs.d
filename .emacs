@@ -314,14 +314,19 @@
             (let ((prefix "M-SPC"))
               (evilem-default-keybindings prefix)
               ;; Override built-ins
-              (evilem-define (kbd (concat prefix " w")) #'evil-forward-word-begin)
-              (evilem-define (kbd (concat prefix " W")) #'evil-forward-WORD-begin)
-              (evilem-define (kbd (concat prefix " e")) #'evil-forward-word-end)
-              (evilem-define (kbd (concat prefix " E")) #'evil-forward-WORD-end)
-              (evilem-define (kbd (concat prefix " b")) #'evil-backward-word-begin)
-              (evilem-define (kbd (concat prefix " B")) #'evil-backward-WORD-begin)
-              (evilem-define (kbd (concat prefix " ge")) #'evil-backward-word-end)
-              (evilem-define (kbd (concat prefix " gE")) #'evil-backward-WORD-end))))
+              ;; (evilem-define (kbd (concat prefix " w")) #'evil-forward-word-begin)
+              (evilem-define (kbd (concat prefix " W")) #'evil-forward-WORD-begin
+                             :scope 'paragraph)
+              ;; (evilem-define (kbd (concat prefix " e")) #'evil-forward-word-end)
+              (evilem-define (kbd (concat prefix " E")) #'evil-forward-WORD-end
+                             :scope 'paragraph)
+              ;; (evilem-define (kbd (concat prefix " b")) #'evil-backward-word-begin)
+              (evilem-define (kbd (concat prefix " B")) #'evil-backward-WORD-begin
+                             :scope 'paragraph)
+              ;; (evilem-define (kbd (concat prefix " ge")) #'evil-backward-word-end)
+              (evilem-define (kbd (concat prefix " gE")) #'evil-backward-WORD-end
+                             :scope 'paragraph)
+              )))
 
 (use-package evil-multiedit
   :demand t
