@@ -780,7 +780,9 @@
   :config (flycheck-package-setup))
 
 (use-package vdiff
-  :defer t)
+  :defer t
+  :config (progn
+            (set-face-attribute 'diff-changed nil :background "purple")))
 
 (load custom-file)
 (use-package seti-theme
