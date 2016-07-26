@@ -779,6 +779,9 @@
   :defer t
   :config (flycheck-package-setup))
 
+(use-package vdiff
+  :defer t)
+
 (load custom-file)
 (use-package seti-theme
   :config (load-theme 'seti))
