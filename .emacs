@@ -521,7 +521,8 @@
             "q" 'cider-popup-buffer-quit-function)
           (evil-define-key 'normal cider-docview-mode-map
             "q" 'cider-popup-buffer-quit-function)
-          (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)))
+          (add-hook 'cider-mode-hook 'turn-on-eldoc-mode)
+          (add-hook 'cider-mode-hook 'cider-eldoc-setup)))
 
 (use-package ac-cider
   :bind (:map cider-mode-map
