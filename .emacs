@@ -550,31 +550,6 @@
                             ("object" "\\(object +\\)\\([^(): ]+\\)" 2))
                           ))))
 
-(use-package ensime
-  :commands ensime
-  :init (evil-define-key 'normal ensime-mode-map
-          (kbd "C-]") 'ensime-edit-definition)
-  :config (progn
-            (defun setup-ensime ()
-              (defvar ensime-slick-prefix "^scala\\.slick\\.")
-
-              (defvar ensime-slickdoc-url-base
-                "http://slick.typesafe.com/doc/2.0.0-M3/api/index.html#"
-                "URL base for constructing slick links.")
-
-              (defun ensime-make-slick-doc-url-helper
-                  (url-base type &optional member)
-                "Given a scala type, and optionally a type member,
-   construct the corresponding slick url.  Currently does not
-   narrow down to member"
-                (concat url-base (ensime-type-full-name type)))
-
-              (defun ensime-make-slick-doc-url (type &optional member)
-                (ensime-make-slick-doc-url-helper
-                 ensime-slickdoc-url-base type member))
-              )
-            (add-hook 'ensime-connected-hook 'setup-ensime)))
-
 (use-package web-mode
   :commands web-mode
   :init (progn
