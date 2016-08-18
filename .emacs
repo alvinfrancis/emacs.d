@@ -504,6 +504,7 @@
               (kbd "C-c C-r") 'lisp-eval-region)))
 
 (use-package cider
+  :pin melpa-stable
   :commands cider-mode
   :init (progn
           (setq cider-repl-display-help-banner nil)
