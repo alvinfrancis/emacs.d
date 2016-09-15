@@ -199,7 +199,7 @@
 
 (use-package eldoc
   :defer t
-  :init (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode))
+  :init (add-hook 'emacs-lisp-mode-hook 'eldoc-mode))
 
 (use-package adaptive-wrap
   :init (setq-default adaptive-wrap-extra-indent 2)
@@ -521,7 +521,7 @@
             "q" 'cider-popup-buffer-quit-function)
           (evil-define-key 'normal cider-docview-mode-map
             "q" 'cider-popup-buffer-quit-function)
-          (add-hook 'cider-mode-hook 'turn-on-eldoc-mode)
+          (add-hook 'cider-mode-hook 'eldoc-mode)
           (add-hook 'cider-mode-hook 'cider-eldoc-setup)))
 
 (use-package ac-cider
