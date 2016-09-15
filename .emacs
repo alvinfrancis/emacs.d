@@ -199,7 +199,11 @@
 
 (use-package eldoc
   :defer t
-  :init (add-hook 'emacs-lisp-mode-hook 'eldoc-mode))
+  :init (progn
+          (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+          (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
+          (add-hook 'ielm-mode-hook 'eldoc-mode)
+          (add-hook 'eval-expression-minibuffer-setup-hook 'eldoc-mode)))
 
 (use-package adaptive-wrap
   :init (setq-default adaptive-wrap-extra-indent 2)
