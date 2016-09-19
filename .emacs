@@ -151,12 +151,13 @@
 
 (use-package linum
   :init (progn
-          (setq linum-format " %d ")
-          (add-hook 'prog-mode-hook 'linum-mode)))
+          (setq linum-format " %d ")))
 
 (use-package linum-relative
   :commands (linum-relative-mode linum-relative-toggle)
-  :init (setq linum-relative-format " %3s "))
+  :init (progn
+          (setq linum-relative-format " %3s ")
+          (add-hook 'prog-mode-hook 'linum-relative-mode)))
 
 (use-package paren
   :defer 60
