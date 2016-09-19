@@ -275,8 +275,7 @@
               (", u" . universal-argument)
               (", x p" . eval-print-last-sexp)
               (", x e" . eval-last-sexp)
-              (", x x" . eval-defun)
-              (", x r" . eval-region))
+              (", x x" . eval-defun))
   :bind (:map evil-visual-state-map
               (";" . evil-ex))
   :bind (:map evil-motion-state-map
