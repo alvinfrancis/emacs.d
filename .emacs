@@ -217,12 +217,40 @@
             ;; 'visual-line-adaptive-wrap-prefix-mode)
  ))
 
+(use-package git-gutter
+  :if (display-graphic-p)
+  :defer 10)
+
+(use-package git-gutter-fringe
+  :if (display-graphic-p)
+  :defer 10
+  :init (setq-default fringes-outside-margins t)
+  :config (progn
+            (define-fringe-bitmap 'git-gutter-fr:added
+              [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]
+              nil nil 'center)
+            (define-fringe-bitmap 'git-gutter-fr:modified
+              [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]
+              nil nil 'center)
+            (fringe-helper-define 'git-gutter-fr:deleted nil
+              "........"
+              "........"
+              "........"
+              "...x...."
+              "...xx..."
+              "...xxx.."
+              "xxxxxxx."
+              "xxxxxxxx")
+
+            (global-git-gutter-mode)))
+
 (use-package git-gutter+
   :defer 10
   :if (not (display-graphic-p))
   :config (global-git-gutter+-mode t))
 
 (use-package git-gutter-fringe+
+  :disabled t
   :defer 10
   :if (display-graphic-p)
   :config (global-git-gutter+-mode t))
