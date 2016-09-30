@@ -466,7 +466,9 @@
 
 (use-package org-page
   :defer t
-  :init (setq op/repository-directory "~/Github/alvinfrancis.github.io"))
+  :init (setq op/repository-directory "~/Github/alvinfrancis.github.io"
+              op/site-domain "https://alvinfrancis.github.io"
+              op/theme 'mdo))
 
 (use-package paredit
   :defer t
