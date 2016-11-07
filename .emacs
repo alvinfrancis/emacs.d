@@ -385,6 +385,7 @@
   :demand t
   :init (progn
           (setq elscreen-tab-display-control nil
+                elscreen-display-tab nil
                 elscreen-display-screen-number nil
                 elscreen-tab-display-kill-screen nil)
 
@@ -403,7 +404,6 @@
               ("H" . elscreen-previous)
               ("L" . elscreen-next))
   :config (progn
-            (elscreen-toggle-display-screen-number)
             (elscreen-start)))
 
 (use-package powerline
