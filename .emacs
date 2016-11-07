@@ -227,20 +227,14 @@
   :init (setq-default fringes-outside-margins t)
   :config (progn
             (define-fringe-bitmap 'git-gutter-fr:added
-              [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]
+              [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]
               nil nil 'center)
             (define-fringe-bitmap 'git-gutter-fr:modified
-              [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]
+              [3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3]
               nil nil 'center)
-            (fringe-helper-define 'git-gutter-fr:deleted nil
-              "........"
-              "........"
-              "........"
-              "...x...."
-              "...xx..."
-              "...xxx.."
-              "xxxxxxx."
-              "xxxxxxxx")
+            (define-fringe-bitmap 'git-gutter-fr:deleted
+              [3 3 3 3 3 3 3 3 3 3 3 3 3 31 15 7 3 1]
+              nil nil 'bottom)
 
             (global-git-gutter-mode)))
 
