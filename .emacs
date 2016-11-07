@@ -641,6 +641,28 @@
 (use-package yaml-mode
   :commands yaml-mode)
 
+(use-package go-mode
+  :defer t
+  :init (progn
+          (setq godef-command (expand-file-name "bin/godef" (getenv "GOPATH")))
+          (cl-labels ((go-mode-setup ()
+                                     (setq compile-command "go build -v && go test -v")
+                                     (go-eldoc-setup)
+                                     (flycheck-mode)
+                                     (set (make-local-variable 'company-backends) '(company-go))
+                                     (add-hook 'before-save-hook #'gofmt-before-save nil 'local)))
+            (add-hook 'go-mode-hook #'go-mode-setup)))
+  :bind (:map go-mode-map
+              ("C-c C-c" . compile)))
+
+(use-package go-eldoc
+  :init (setq go-eldoc-gocode (expand-file-name "bin/gocode" (getenv "GOPATH")))
+  :defer t)
+
+(use-package company-go
+  :init (setq company-go-gocode-command (expand-file-name "bin/gocode" (getenv "GOPATH")))
+  :defer t)
+
 (use-package magit
   :init (progn
           (setq magit-last-seen-setup-instructions "1.4.0")
