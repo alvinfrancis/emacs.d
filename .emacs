@@ -434,7 +434,8 @@
                 org-tags-exclude-from-inheritance (quote ("crypt"))
                 org-crypt-key "alvin.francis.dumalus@gmail.com"
                 org-hide-emphasis-markers t
-                org-adapt-indentation nil)
+                org-adapt-indentation nil
+                org-imenu-depth 3)
           (evil-define-key 'normal org-mode-map
             (kbd "> >") 'org-indent-item
             (kbd "> t") 'org-indent-item-tree
