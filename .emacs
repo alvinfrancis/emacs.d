@@ -561,6 +561,7 @@
             "q" 'cider-popup-buffer-quit-function)
           (evil-define-key 'normal cider-docview-mode-map
             "q" 'cider-popup-buffer-quit-function)
+          (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel! \"main\" \"devcards\") (cljs-repl))")
           (add-hook 'cider-mode-hook 'eldoc-mode)
           (add-hook 'cider-mode-hook 'cider-eldoc-setup)))
 
