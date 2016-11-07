@@ -455,7 +455,11 @@
             (org-babel-do-load-languages
              'org-babel-load-languages
              '((emacs-lisp . t)
-               (sql . t)))
+               (sql . t)
+               (js . t)
+               (python . t)
+               (clojure . t)))
+            (setq org-babel-clojure-backend 'cider)
             (require 'org-crypt)
             (org-crypt-use-before-save-magic)))
 
