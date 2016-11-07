@@ -536,6 +536,7 @@
             (put-clojure-indent 'reify '(:defn (1)))
             (put-clojure-indent 'defprotocol '(:defn (1)))
             (put-clojure-indent 'this-as '(:defn (1)))
+            (put-clojure-indent 'defui '(:defn (1)))
             (evil-define-key 'normal clojure-mode-map
               (kbd "C-c C-e") 'lisp-eval-last-sexp
               (kbd "C-c C-c") 'lisp-eval-defun)
