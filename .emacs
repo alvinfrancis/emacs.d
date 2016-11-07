@@ -281,9 +281,9 @@
               (ace-jump-mode 5)
               (recursive-edit))
             (evil-define-motion evil-jump-up (count)
-              (evil-previous-line (* (or count 1) 5)))
+              (evil-previous-visual-line (* (or count 1) 5)))
             (evil-define-motion evil-jump-down (count)
-              (evil-next-line (* (or count 1) 5)))
+              (evil-next-visual-line (* (or count 1) 5)))
             (evil-define-operator evil-toggle-comment (beg end)
               "Comment operator that can work with evil-motions."
               (comment-or-uncomment-region beg end))
