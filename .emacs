@@ -168,13 +168,6 @@
               ido-everywhere t)
   :config (ido-mode 1))
 
-(use-package auto-complete
-  :bind (:map ac-complete-mode-map
-              ("C-n" . ac-next)
-              ("C-p" . ac-previous))
-  :demand t
-  :config (ac-config-default))
-
 (use-package recentf
   :demand t
   :init (progn
@@ -374,8 +367,19 @@
   :config (key-chord-define evil-multiedit-insert-state-map "jj" 'evil-multiedit-state))
 
 (use-package hippie-exp
+  :disabled t
   :bind (:map evil-insert-state-map
               ("M-TAB" . hippie-expand)))
+
+(use-package company
+  :init (setq company-idle-delay nil)
+  :bind (:map company-mode-map
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous))
+  :bind (:map evil-insert-state-map
+              ("M-TAB" . company-indent-or-complete-common))
+  :demand t
+  :config (add-hook 'prog-mode-hook 'company-mode))
 
 (use-package elscreen
   :demand t
@@ -553,10 +557,6 @@
             "q" 'cider-popup-buffer-quit-function)
           (add-hook 'cider-mode-hook 'eldoc-mode)
           (add-hook 'cider-mode-hook 'cider-eldoc-setup)))
-
-(use-package ac-cider
-  :bind (:map cider-mode-map
-              ("C-c C-d" . ac-cider-popup-doc)))
 
 (use-package inf-clojure
   :commands inf-clojure)
