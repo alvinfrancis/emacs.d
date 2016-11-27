@@ -574,6 +574,7 @@
   :commands clojure-cheatsheet)
 
 (use-package scala-mode
+  :disabled t
   :commands scala-mode
   :init (add-hook 'scala-mode-hook
                   (lambda ()
