@@ -415,15 +415,6 @@
               (powerline-reset))
             (powerline-center-evil-theme)))
 
-(use-package multiple-cursors
-  :disabled t
-  :init (progn
-          (global-set-key (kbd "s-<up>") 'mc/mark-previous-like-this)
-          (global-set-key (kbd "s-<down>") 'mc/mark-next-like-this)
-          (bind-keys :map evil-visual-state-map
-                     ("C-n" . mc/mark-next-like-this)
-                     ("C-p" . mc/mark-previous-like-this))))
-
 (use-package highlight
   :bind (:map evil-normal-state-map
               (", h h" . hlt-highlight-symbol)
