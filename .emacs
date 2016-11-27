@@ -769,7 +769,7 @@
           (other-window 1)))
 
 (use-package exec-path-from-shell
-  :defer 10
+  :demand t
   :config (exec-path-from-shell-initialize))
 
 (use-package ssh
