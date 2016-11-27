@@ -816,5 +816,5 @@
             (set-face-attribute 'diff-changed nil :background "purple")))
 
 (load custom-file)
-(use-package seti-theme
-  :config (load-theme 'seti))
+(use-package gruvbox-theme
+  :config (load-theme 'gruvbox))
