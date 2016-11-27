@@ -149,6 +149,8 @@
 
 ;; --------------
 
+(use-package bind-key)
+
 (use-package linum
   :init (progn
           (setq linum-format " %d ")))
