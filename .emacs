@@ -818,3 +818,7 @@
 (load custom-file)
 (use-package gruvbox-theme
   :config (load-theme 'gruvbox))
+
+(use-package threads-modeline
+  :demand t
+  :load-path "lisp/")
