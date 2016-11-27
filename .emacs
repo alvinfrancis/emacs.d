@@ -368,6 +368,10 @@
               ("g p" . evil-multiedit-prev))
   :config (key-chord-define evil-multiedit-insert-state-map "jj" 'evil-multiedit-state))
 
+(use-package evil-anzu
+  :init (setq anzu-cons-mode-line-p nil)
+  :defer 10)
+
 (use-package hippie-exp
   :disabled t
   :bind (:map evil-insert-state-map
