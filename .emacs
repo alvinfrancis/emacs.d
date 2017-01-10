@@ -649,7 +649,6 @@
 (use-package go-mode
   :defer t
   :init (progn
-          (setq godef-command (expand-file-name "bin/godef" (getenv "GOPATH")))
           (cl-labels ((go-mode-setup ()
                                      (setq compile-command "go build -v && go test -v")
                                      (go-eldoc-setup)
@@ -661,11 +660,10 @@
               ("C-c C-c" . compile)))
 
 (use-package go-eldoc
-  :init (setq go-eldoc-gocode (expand-file-name "bin/gocode" (getenv "GOPATH")))
   :defer t)
 
 (use-package company-go
-  :init (setq company-go-gocode-command (expand-file-name "bin/gocode" (getenv "GOPATH")))
+  :init (setq company-go-gocode-command "gocode")
   :defer t)
 
 (use-package magit
