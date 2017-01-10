@@ -54,6 +54,21 @@
  '(powerline-color1 "#3d3d68")
  '(powerline-color2 "#292945")
  '(powerline-height 10)
+ '(safe-local-variable-values
+   (quote
+    ((bug-reference-bug-regexp . "#\\(?2:[[:digit:]]+\\)")
+     (checkdoc-package-keywords-flag)
+     (eval progn
+           (put-clojure-indent
+            (quote mdl/textfield)
+            (quote
+             (:defn
+              (1))))
+           (put-clojure-indent
+            (quote mdl/layout)
+            (quote
+             (:defn
+              (1))))))))
  '(sml/active-background-color "#34495e")
  '(sml/active-foreground-color "#ecf0f1")
  '(sml/inactive-background-color "#dfe4ea")
