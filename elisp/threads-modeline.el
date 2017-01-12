@@ -55,7 +55,7 @@ e.g. (threads-fix-unicode \"DejaVu Sans\" ?⚠ ?★ ?λ)"
 ;; NOTE Compile this file for a faster startup!
 (eval-when-compile (require 'powerline))
 ;; FIXME Don't hardcode colors in
-(defvar mode-line-bar-color "RoyalBlue3")
+(defvar mode-line-bar-color (face-attribute font-lock-keyword-face :foreground))
 
 (defvar mode-line-bar          (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 mode-line-bar-color nil)))
 (defvar mode-line-inactive-bar (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 nil nil)))
