@@ -94,6 +94,18 @@ e.g. (threads-fix-unicode \"DejaVu Sans\" ?⚠ ?★ ?λ)"
 (defface threads-flycheck-warning '((t (:inherit warning)))
   "Face for flycheck warning feedback in the modeline.")
 
+(defface mode-line-evil-normal-mode `((t (:inherit mode-line :background ,mode-line-bar-color :foreground ,(threads-max-contrast mode-line-bar-color))))
+  "Face for evil normal mode indicator")
+
+(defface mode-line-evil-visual-mode
+  `((t (:inherit mode-line :background "#FF7F00" :foreground "#950000")))
+  "Face for evil visual mode indicator")
+
+(defface mode-line-evil-insert-mode `((t (:inherit mode-line :background "#FFFFFF" :foreground "#006261")))
+  "Face for evil insert mode indicator")
+
+(defface mode-line-evil-emacs-mode `((t (:inherit mode-line-2)))
+  "Face for evil emacs mode indicator")
 
 ;;
 ;; Functions
@@ -358,14 +370,18 @@ to be enabled."
     ))
 
 (defun *evil-mode ()
-  (let ((s (cond
-            ((eq evil-state 'normal) " N ")
-            ((eq evil-state 'visual) " V ")
-            ((eq evil-state 'insert) " I ")
-            ((eq evil-state 'replace) " R ")
-            ((eq evil-state 'emacs) " E ")
-            (evil-mode-line-tag))))
-    (propertize s 'face (when active 'mode-line-2))))
+  (cond
+   ((eq evil-state 'normal)
+    (propertize " N " 'face (when active 'mode-line-evil-normal-mode)))
+   ((eq evil-state 'visual)
+    (propertize " V " 'face (when active 'mode-line-evil-visual-mode)))
+   ((eq evil-state 'insert)
+    (propertize " I " 'face (when active 'mode-line-evil-insert-mode)))
+   ((eq evil-state 'replace)
+    (propertize " R " 'face (when active 'mode-line-evil-insert-mode)))
+   ((eq evil-state 'emacs)
+    (propertize " E " 'face (when active 'mode-line-evil-emacs-mode)))
+   (evil-mode-line-tag)))
 
 (defun *cider-mode ()
   (when (eq major-mode 'cider-mode)
