@@ -72,7 +72,9 @@ e.g. (threads-fix-unicode \"DejaVu Sans\" ?⚠ ?★ ?λ)"
 (defface mode-line-2 `((t (:inherit mode-line :foreground ,(threads-lighten mode-line-bar-color 0.5))))
   "The alternate color for mode-line text.")
 
-(defface mode-line-selection `((t (:inherit mode-line :background ,(threads-lighten mode-line-bar-color 0.5) :foreground ,(threads-darken mode-line-bar-color 0.5))))
+(defface mode-line-selection `((t ,(let ((bg (threads-lighten mode-line-bar-color 0.5)))
+                                     (list :inherit 'mode-line
+                                           :background bg :foreground (threads-max-contrast bg)))))
   "Face for bright segments of the mode-line.")
 
 ;; Same color as mode-line-bar
