@@ -401,7 +401,6 @@ to be enabled."
                       (*anzu)
                       (*evil-substitute)
                       (*iedit)
-                      " "
                       (*evil-mode)
                       " "
                       (*buffer-path)
