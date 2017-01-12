@@ -47,6 +47,11 @@ e.g. (threads-fix-unicode \"DejaVu Sans\" ?⚠ ?★ ?λ)"
 (defun threads-lighten (color alpha)
   (threads-blend color "#FFFFFF" (- 1 alpha)))
 
+(defun threads-max-contrast (color)
+  (let* ((hsl (apply #'color-rgb-to-hsl (threads-name-to-rgb color)))
+         (lightness (nth 2 hsl)))
+    (if (< lightness 0.5) "#FFF" "#000")))
+
 (defvar mode-line-height 30
   "How tall the mode-line should be. This is only respected in GUI emacs.")
 
