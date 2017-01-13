@@ -395,13 +395,13 @@ to be enabled."
   `(:eval
     (let* ((active (eq (selected-window) mode-line-selected-window))
            (lhs (list (propertize " " 'display (if active mode-line-bar mode-line-inactive-bar))
+                      (*evil-mode)
                       (*flycheck)
                       (*macro-recording)
                       (*selection-info)
                       (*anzu)
                       (*evil-substitute)
                       (*iedit)
-                      (*evil-mode)
                       " "
                       (*buffer-path)
                       (*buffer-name)
