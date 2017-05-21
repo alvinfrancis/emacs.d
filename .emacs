@@ -806,7 +806,61 @@
   :defer t)
 
 (use-package flycheck
-  :defer t)
+  :defer t
+  :init (setq flycheck-indication-mode 'right-fringe)
+  :config (progn
+            (when (fboundp 'define-fringe-bitmap)
+              (define-fringe-bitmap 'flycheck-fringe:error
+                (vector #b11000011
+                        #b01100110
+                        #b00111100
+                        #b00011000
+                        #b00111100
+                        #b01100110
+                        #b11000011))
+              (define-fringe-bitmap 'flycheck-fringe:warning
+                (vector #b00011000
+                        #b00011000
+                        #b00011000
+                        #b00011000
+                        #b00011000
+                        #b00011000
+                        #b00000000
+                        #b00000000
+                        #b00011000
+                        #b00011000))
+              (define-fringe-bitmap 'flycheck-fringe:warning
+                (vector #b00011000
+                        #b00011000
+                        #b00000000
+                        #b00000000
+                        #b00011000
+                        #b00011000
+                        #b00011000
+                        #b00011000
+                        #b00011000
+                        #b00011000)))
+            (flycheck-define-error-level 'error
+              :severity 100
+              :compilation-level 2
+              :overlay-category 'flycheck-error-overlay
+              :fringe-bitmap 'flycheck-fringe:error
+              :fringe-face 'flycheck-fringe-error
+              :error-list-face 'flycheck-error-list-error)
+            (flycheck-define-error-level 'warning
+              :severity 10
+              :compilation-level 1
+              :overlay-category 'flycheck-warning-overlay
+              :fringe-bitmap 'flycheck-fringe:warning
+              :fringe-face 'flycheck-fringe-warning
+              :error-list-face 'flycheck-error-list-warning)
+            (flycheck-define-error-level 'info
+              :severity -10
+              :compilation-level 0
+              :overlay-category 'flycheck-info-overlay
+              :fringe-bitmap 'flycheck-fringe:info
+              :fringe-face 'flycheck-fringe-info
+              :error-list-face 'flycheck-error-list-info)))
 
 (use-package flycheck-package
   :defer t
