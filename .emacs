@@ -657,7 +657,8 @@
                                      (add-hook 'before-save-hook #'gofmt-before-save nil 'local)))
             (add-hook 'go-mode-hook #'go-mode-setup)))
   :bind (:map go-mode-map
-              ("C-c C-c" . compile)))
+              ("C-c C-c" . compile)
+              ("C-c C-d" . godoc-at-point)))
 
 (use-package go-eldoc
   :defer t)
