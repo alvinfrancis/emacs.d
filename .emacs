@@ -255,7 +255,10 @@
   :init (setq evil-move-cursor-back nil
               evil-search-module 'evil-search
               evil-want-fine-undo nil
-              evil-want-Y-yank-to-eol t)
+              evil-want-C-u-scroll t
+              evil-want-C-d-scroll t
+              evil-want-Y-yank-to-eol t
+              evil-ex-search-persistent-highlight nil)
   :bind (:map evil-normal-state-map
               (";" . evil-ex)
               ("<left>" . evil-prev-buffer)
