@@ -82,7 +82,6 @@
         (set-frame-parameter frame 'fullscreen 'fullboth)
       (set-frame-parameter frame 'fullscreen nil))))
 
-(bind-key "<f9>" 'fullscreen-toggle)
 
 ;; others
 (setq
@@ -149,7 +148,8 @@
 
 ;; --------------
 
-(use-package bind-key)
+(use-package bind-key
+  :config (bind-key "<f9>" 'fullscreen-toggle))
 
 (use-package linum
   :init (progn
