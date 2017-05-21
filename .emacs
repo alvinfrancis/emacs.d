@@ -457,6 +457,7 @@
              '((emacs-lisp . t)
                (sql . t)
                (js . t)
+               (ipython . t)
                (python . t)
                (clojure . t)))
             (setq org-babel-clojure-backend 'cider)
