@@ -579,8 +579,6 @@
 (use-package inf-clojure
   :commands inf-clojure)
 
-(use-package clojure-cheatsheet
-  :commands clojure-cheatsheet)
 (use-package python
   :defer t
   :init (setq python-shell-completion-native-enable nil))
