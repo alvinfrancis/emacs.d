@@ -155,7 +155,8 @@
 
 (use-package linum
   :init (progn
-          (setq linum-format " %d ")))
+          (setq linum-format " %d ")
+          (add-hook 'prog-mode-hook 'linum-mode)))
 
 (use-package linum-relative
   :commands (linum-relative-mode linum-relative-toggle)
