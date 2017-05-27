@@ -693,6 +693,10 @@
 
 (use-package smerge-mode
   :commands smerge-mode
+  :bind (:map evil-normal-state-map
+              (", g j" . smerge-next)
+              (", g k" . smerge-prev)
+              (", g RET" . smerge-keep-current))
   :init (progn
           (defun sm-try-smerge ()
             (save-excursion
