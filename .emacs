@@ -481,6 +481,10 @@
               op/site-domain "https://alvinfrancis.github.io"
               op/theme 'mdo))
 
+(use-package ob-ipython
+  :defer t
+  :init (setq ob-ipython-command "ipython"))
+
 (use-package paredit
   :defer t
   :init (progn
@@ -576,6 +580,9 @@
 
 (use-package clojure-cheatsheet
   :commands clojure-cheatsheet)
+(use-package python
+  :defer t
+  :init (setq python-shell-completion-native-enable nil))
 
 (use-package scala-mode
   :disabled t
