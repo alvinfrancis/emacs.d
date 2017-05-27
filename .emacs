@@ -638,19 +638,45 @@
           (add-hook 'sql-interactive-mode-hook
                     (lambda ()
                       (unbind-key ";" sql-interactive-mode-map))))
-  :config (defun sql-send-paragraph ()
-            "Send the current paragraph to the SQL process."
-            (interactive)
-            (let ((start (save-excursion
-                           (backward-paragraph)
-                           (point)))
-                  (end (save-excursion
-                         (forward-paragraph)
-                         (point))))
-              (sql-send-string
-               (mapconcat #'identity
-                          (split-string (buffer-substring start end) "\n")
-                          " ")))))
+
+  :config
+  (bind-keys
+   :map evil-normal-state-map
+   (", b" . sql-beautify-paragraph)
+   :map evil-visual-state-map
+   (", b" . sql-beautify-region))
+  (defun sql-beautify-region (beg end)
+    "Beautify SQL in region between BEG and END."
+    (interactive "r")
+    (save-excursion
+      (shell-command-on-region
+       beg end
+       "sqlformat-2.7 --reindent --keyword=\"upper\" -" nil t)))
+
+  (defun sql-beautify-paragraph ()
+    "Beautify contiguous SQL code under point."
+    (interactive)
+    (let ((start (save-excursion
+                   (backward-paragraph)
+                   (point)))
+          (end (save-excursion
+                 (forward-paragraph)
+                 (point))))
+      (sql-beautify-region start end)))
+
+  (defun sql-send-paragraph ()
+    "Send the current paragraph to the SQL process."
+    (interactive)
+    (let ((start (save-excursion
+                   (backward-paragraph)
+                   (point)))
+          (end (save-excursion
+                 (forward-paragraph)
+                 (point))))
+      (sql-send-string
+       (mapconcat #'identity
+                  (split-string (buffer-substring start end) "\n")
+                  " ")))))
 
 (use-package sgml-mode
   :commands html-mode
