@@ -272,9 +272,9 @@
               (", x e" . eval-last-sexp)
               (", x x" . eval-defun))
   :bind (:map evil-visual-state-map
-              (";" . evil-ex))
+              (";" . evil-ex)
+              (", u" . universal-argument))
   :bind (:map evil-motion-state-map
-              ("C-u" . evil-scroll-up)
               ("j" . evil-next-visual-line)
               ("k" . evil-previous-visual-line)
               ("-" . evil-jump-up)
