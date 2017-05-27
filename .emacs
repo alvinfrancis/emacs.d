@@ -391,7 +391,9 @@
   :bind (:map evil-insert-state-map
               ("M-TAB" . company-indent-or-complete-common))
   :demand t
-  :config (add-hook 'prog-mode-hook 'company-mode))
+  :config
+  (add-hook 'prog-mode-hook 'company-mode)
+  (add-hook 'cider-repl-mode-hook 'company-mode))
 
 (use-package elscreen
   :demand t
