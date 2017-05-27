@@ -90,6 +90,8 @@
  make-backup-files nil
  visible-bell t                         ; prefer visual over beeping
  fill-column 80
+ minibuffer-prompt-properties
+ '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)
  )
 
 ;;;; Defaults
