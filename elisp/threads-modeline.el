@@ -91,9 +91,9 @@ e.g. (threads-fix-unicode \"DejaVu Sans\" ?⚠ ?★ ?λ)"
   "")
 
 ;; Flycheck segment faces
-(defface threads-flycheck-error '((t (:inherit error)))
+(defface threads-mode-line-flycheck-error '((t (:inherit error)))
   "Face for flycheck error feedback in the modeline.")
-(defface threads-flycheck-warning '((t (:inherit warning)))
+(defface threads-mode-line-flycheck-warning '((t (:inherit warning)))
   "Face for flycheck warning feedback in the modeline.")
 
 (defface mode-line-evil-normal-mode `((t (:inherit mode-line :background ,mode-line-bar-color :foreground ,(threads-max-contrast mode-line-bar-color))))
@@ -274,11 +274,11 @@ project root). Excludes the file basename. See `*buffer-name' for that."
                      (concat
                       (if fe (propertize (format " •%d " fe)
                                          'face (if active
-                                                   'threads-flycheck-error
+                                                   'threads-mode-line-flycheck-error
                                                  'mode-line)))
                       (if fw (propertize (format " •%d " fw)
                                          'face (if active
-                                                   'threads-flycheck-warning
+                                                   'threads-mode-line-flycheck-warning
                                                  'mode-line))))))))))
 
 (defun *selection-info ()
@@ -425,6 +425,90 @@ to be enabled."
       (list lhs middle rhs))))
 
 (setq-default mode-line-format (threads-mode-line))
+
+;; Helm segments
+;; -------------
+
+(declare-function helm-candidate-number-at-point 'helm)
+(declare-function helm-get-candidate-number 'helm)
+
+(defvar threads--helm-buffer-ids
+  '(("*helm*" . "HELM")
+    ("*helm M-x*" . "HELM M-x")
+    ("*Projectile Perspectives*" . "HELM Projectile Perspectives")
+    ("*Projectile Layouts*" . "HELM Projectile Layouts")
+    ("*helm-ag*" . (lambda ()
+                     (format "HELM Ag: Using %s"
+                             (car (split-string helm-ag-base-command))))))
+  "Alist of custom helm buffer names to use. The cdr can also be
+a function that returns a name to use.")
+
+(defun *helm-buffer-id ()
+  "Helm session identifier."
+  (when (bound-and-true-p helm-alive-p)
+    (propertize
+     (let ((custom (cdr (assoc (buffer-name) threads--helm-buffer-ids)))
+           (case-fold-search t)
+           (name (replace-regexp-in-string "-" " " (buffer-name))))
+       (cond ((stringp custom) custom)
+             ((functionp custom) (funcall custom))
+             (t
+              (string-match "\\*helm:? \\(mode \\)?\\([^\\*]+\\)\\*" name)
+              (concat "HELM " (capitalize (match-string 2 name))))))
+     'face 'bold)))
+
+(defun *helm-done ()
+  "Done."
+  (propertize "(DONE)" 'face 'bold))
+
+(defun *helm-number ()
+  "Number of helm candidates."
+  (when (bound-and-true-p helm-alive-p)
+    (format "%d/%s (%s total)"
+            (helm-candidate-number-at-point)
+            (helm-get-candidate-number t)
+            (helm-get-candidate-number))))
+
+(defun *helm-help ()
+  "Helm keybindings help."
+  (when (bound-and-true-p helm-alive-p)
+    (-interleave
+     (mapcar (lambda (s)
+               (propertize (substitute-command-keys s) 'face 'bold))
+             '("\\<helm-map>\\[helm-help]"
+               "\\<helm-map>\\[helm-select-action]"
+               "\\<helm-map>\\[helm-maybe-exit-minibuffer]/F1/F2..."))
+     '("(help)" "(actions)" "(action)"))))
+
+(defun *helm-prefix-argument ()
+  "Helm prefix argument."
+  (when (and (bound-and-true-p helm-alive-p)
+             helm--mode-line-display-prefarg)
+    (let ((arg (prefix-numeric-value (or prefix-arg current-prefix-arg))))
+      (unless (= arg 1)
+        (propertize (format "C-u %s" arg) 'face 'helm-prefarg)))))
+
+(defvar threads--helm-current-source nil
+  "The currently active helm source")
+
+(defun *helm-follow ()
+  "Helm follow indicator."
+  (when (and (bound-and-true-p helm-alive-p)
+             threads--helm-current-source
+             (eq 1 (cdr (assq 'follow threads--helm-current-source))))
+    "HF"))
+
+(defun threads-helm-mode-line (&optional id)
+  `(:eval
+    (let* ((active (eq (selected-window) mode-line-selected-window))
+           (lhs (list (propertize " " 'display (if active mode-line-bar mode-line-inactive-bar))))
+           (rhs (list " "))
+           (middle (propertize
+                    " " 'display `((space :align-to (- (+ right right-fringe right-margin)
+                                                       ,(1+ (string-width (format-mode-line rhs)))))))))
+      (list lhs middle rhs))))
+
+; (setq-default helm-mode-line-string (threads-helm-mode-line))
 
 (provide 'threads-modeline)
 ;;; threads-modeline.el ends here
