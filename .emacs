@@ -923,4 +923,5 @@
 
 (use-package threads-modeline
   :demand t
+  :init (setf mode-line-bar-color "RoyalBlue")
   :load-path "lisp/")
