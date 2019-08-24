@@ -92,6 +92,7 @@
  fill-column 80
  minibuffer-prompt-properties
  '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)
+ auto-window-vscroll nil                ; speed up cursor movement
  )
 
 ;;;; Defaults
@@ -503,8 +504,7 @@
             (kbd "< l") 'paredit-forward-barf-sexp
             ;; NOTE: Inteferes with d-prefix keys
             ;; (kbd "d s f") 'paredit-splice-sexp
-            (kbd "W") 'paredit-forward
-            (kbd "B") 'paredit-backward)))
+            )))
 
 (use-package slime
   :init (progn
@@ -563,7 +563,7 @@
             (kbd ", x p") 'cider-eval-print-last-sexp
             (kbd ", x e") 'cider-eval-last-sexp
             (kbd ", x x") 'cider-eval-defun-at-point
-            (kbd "C-]") 'cider-jump-to-var)
+            (kbd "C-]") 'cider-find-var)
           (evil-define-key 'visual cider-mode-map
             (kbd ", x r") 'cider-eval-region)
           (evil-define-key 'normal cider-popup-buffer-mode-map
@@ -741,6 +741,7 @@
   :defer t)
 
 (use-package helm
+  :pin melpa-stable
   :bind (("M-x" . helm-M-x)
          ("C-x C-f" . helm-find-files)
          :map evil-visual-state-map
@@ -753,11 +754,11 @@
          ("\\ m" . helm-imenu)
          ("\\ \\" . helm-resume))
   :config (progn
+            (require 'helm-for-files)
             (defun helm-files-mru ()
               (interactive)
               (helm :sources '(helm-source-recentf
-                               helm-source-findutils
-                               helm-source-files-in-current-dir)
+                               helm-source-find-files)
                     :buffer "*helm-files-mru-buffers*"))
             (helm-mode t)))
 
@@ -917,11 +918,35 @@
   :config (progn
             (set-face-attribute 'diff-changed nil :background "purple")))
 
+(use-package org-present
+  :bind (:map evil-normal-state-map
+              (", l" . org-present-next)
+              (", h" . org-present-prev)))
+
+(use-package elfeed
+  :pin melpa-stable
+  :defer t)
+
+(use-package request
+  :pin melpa-stable
+  :defer t)
+
+(use-package drawille
+  :disabled t
+  :defer t)
+
+(use-package spark
+  :defer t)
+
 (load custom-file)
+
 (use-package gruvbox-theme
+  :pin melpa-stable
   :config (load-theme 'gruvbox))
 
 (use-package threads-modeline
   :demand t
   :init (setf mode-line-bar-color "RoyalBlue")
   :load-path "lisp/")
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
